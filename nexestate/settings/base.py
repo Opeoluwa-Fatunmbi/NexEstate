@@ -35,12 +35,15 @@ DJANGO_APPS = [
 # Third party apps
 
 THIRD_PARTY_APPS = [
+    "adrf",
     "rest_framework",
     "channels",
     "debug_toolbar",
     "cloudinary",
     "cloudinary_storage",
     "drf_spectacular",
+    "phonenumber_field",
+    "django_countries",
 ]
 
 # Local apps
@@ -49,6 +52,7 @@ LOCAL_APPS = [
     "apps.common",
     "apps.accounts",
     "apps.properties",
+    "apps.enquiries",
     "apps.payments",
     "apps.notifications",
     "apps.reports",
@@ -214,7 +218,7 @@ logging.config.dictConfig(
                 "level": "INFO",
                 "class": "logging.FileHandler",
                 "formatter": "file",
-                "filename": "logs/iBet.log",
+                "filename": "logs/nexestate.log",
             },
             "django.server": DEFAULT_LOGGING["handlers"]["django.server"],
         },
