@@ -41,19 +41,19 @@ class Property(BaseModel):
     )
     description = models.TextField(
         verbose_name=_("Description"),
-        default="Default description...update me please....",
+        default="Default description",
     )
     country = CountryField(
         verbose_name=_("Country"),
-        default="KE",
+        default="NG",
         blank_label="(select country)",
     )
-    city = models.CharField(verbose_name=_("City"), max_length=180, default="Nairobi")
+    city = models.CharField(verbose_name=_("City"), max_length=180, default="Lagos")
     postal_code = models.CharField(
-        verbose_name=_("Postal Code"), max_length=100, default="140"
+        verbose_name=_("Postal Code"), max_length=100, default="10123"
     )
     street_address = models.CharField(
-        verbose_name=_("Street Address"), max_length=150, default="KG8 Avenue"
+        verbose_name=_("Street Address"), max_length=150, default="Allen Avenue"
     )
     property_number = models.IntegerField(
         verbose_name=_("Property Number"),
