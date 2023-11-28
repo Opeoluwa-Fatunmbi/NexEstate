@@ -269,7 +269,7 @@ JAZZMIN_SETTINGS = {
     # Copyright on the footer
     "copyright": "iBet Ltd",
     # The model admin to search from the search bar, search bar omitted if excluded
-    "search_model": "auth_model.User",
+    "search_model": "accountsUser",
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": "avatar",
     ############
@@ -286,11 +286,15 @@ JAZZMIN_SETTINGS = {
         # model admin to link to (Permissions checked against model)
         # {"model": "accounts.User"},
         # App with dropdown menu to all its models pages (Permissions checked against models)
-        {"app": "auth_module"},
-        {"app": "billing"},
-        {"app": "betting"},
-        {"app": "game"},
-        {"app": "mediation"},
+        {"app": "accounts"},
+        {"app": "analytics"},
+        {"app": "enquiries"},
+        {"app": "notifications"},
+        {"app": "payments"},
+        {"app": "properties"},
+        {"app": "profiles"},
+        {"app": "reports"},
+        {"app": "chats"},
         {"app": "sites"},
     ],
     #############
@@ -298,8 +302,8 @@ JAZZMIN_SETTINGS = {
     #############
     # Additional links to include in the user menu on the top right ("app" url type is not allowed)
     "usermenu_links": [
-        {"name": "iBet FrontPage", "url": "/", "new_window": True},
-        {"model": "auth_module.user"},
+        {"name": "NexEstate FrontPage", "url": "/", "new_window": True},
+        {"model": "accounts.user"},
     ],
     #############
     # Side Menu #
@@ -318,18 +322,15 @@ JAZZMIN_SETTINGS = {
     # for the full list of 5.13.0 free icon classes
     "icons": {
         "auth.Group": "fas fa-users",
-        "auth_module.user": "fas fa-user-cog",
+        "accounts.user": "fas fa-user-cog",
+        "equiries.enquiry": "fas fa-envelope",
+        "notifications.notification": "fas fa-bell",
+        "payments.payment": "fas fa-money-bill",
+        "properties.property": "fas fa-home",
+        "profiles.profile": "fas fa-user",
+        "reports.report": "fas fa-chart-bar",
+        "chats.chat": "fas fa-comments",
         "sites.site": "fas fa-globe",
-        "betting.bet": "fas fa-trophy",
-        "betting.match": "fas fa-futbol",
-        "betting.outcome": "fas fa-check",
-        "billing.transaction": "fas fa-dollar-sign",
-        "game.game": "fas fa-gamepad",
-        "auth_module.user": "fas fa-user",
-        "auth_module.user": "fas fa-users",
-        "mediation.mediator": "fas fa-gavel",
-        "mediation.mediation": "fas fa-balance-scale",
-        "game.player": "fas fa-user",
     },
     # Icons that are used when one is not manually specified
     "default_icon_parents": "fas fa-chevron-circle-right",
