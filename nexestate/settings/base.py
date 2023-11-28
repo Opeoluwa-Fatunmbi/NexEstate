@@ -267,7 +267,7 @@ JAZZMIN_SETTINGS = {
     # Welcome text on the login screen
     "welcome_sign": "Welcome to NetEstate Admin Section",
     # Copyright on the footer
-    "copyright": "iBet Ltd",
+    "copyright": "NexEstate Ltd",
     # The model admin to search from the search bar, search bar omitted if excluded
     "search_model": "accountsUser",
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user

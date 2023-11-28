@@ -18,8 +18,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     id = models.UUIDField(
         default=uuid.uuid4, primary_key=True, unique=True, editable=False
     )
-    facebook_id = models.CharField(_("facebook_id"), max_length=50, null=True)
-    google_id = models.CharField(_("google_id"), max_length=50, null=True)
     first_name = models.CharField(_("first_name"), max_length=50)
     last_name = models.CharField(_("last_name"), max_length=50)
     email = models.EmailField(_("Email_address"), unique=True)
