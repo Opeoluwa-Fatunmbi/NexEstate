@@ -9,7 +9,7 @@ class Enquiry(BaseModel):
     name = models.CharField(_("Your Name"), max_length=100)
     slug = Auto(populate_from="name", unique=True)
     phone_number = PhoneNumberField(
-        _("Phone number"), max_length=30, default="+254703229589"
+        _("Phone number"), max_length=30, default="+23481552000"
     )
     email = models.EmailField(_("Email"))
     subject = models.CharField(_("Subject"), max_length=100)
