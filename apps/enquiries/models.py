@@ -9,7 +9,7 @@ class Enquiry(BaseModel):
     name = models.CharField(_("Your Name"), max_length=100)
     slug = Auto(populate_from="name", unique=True)
     phone_number = PhoneNumberField(
-        _("Phone number"), max_length=30, default="+23481552000"
+        _("Phone number"), max_length=30, default="+2348155200000"
     )
     email = models.EmailField(_("Email"))
     subject = models.CharField(_("Subject"), max_length=100)
@@ -20,4 +20,5 @@ class Enquiry(BaseModel):
         return self.email
 
     class Meta:
+        verbose_name = "Enquiry"
         verbose_name_plural = "Enquiries"

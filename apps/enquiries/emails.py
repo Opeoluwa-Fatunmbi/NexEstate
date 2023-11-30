@@ -1,6 +1,7 @@
 from django.template.loader import render_to_string
 from django.core.mail import EmailMessage
 import threading
+from nexestate.settings.base import DEFAULT_FROM_EMAIL
 
 
 class EmailThread(threading.Thread):
@@ -26,6 +27,6 @@ class Util:
             },
         )
         email_message = EmailMessage(
-            subject=subject, body=message, to=[user.is_admin.email]
+            subject=subject, body=message, to=[DEFAULT_FROM_EMAIL]
         )
         EmailThread(email_message).start()

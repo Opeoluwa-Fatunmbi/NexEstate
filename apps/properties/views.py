@@ -1,11 +1,17 @@
-from apps.properties.models import Property
+from django.shortcuts import get_object_or_404
+from apps.properties.models import Property, PropertyViews, FavouriteProperty
 from adrf.views import APIView
 from apps.common.responses import CustomResponse
 from rest_framework.throttling import UserRateThrottle
-from apps.properties.serializers import PropertySerializer, PropertyCreateSerializer
+from apps.properties.serializers import (
+    PropertySerializer,
+    PropertyCreateSerializer,
+    FavouritePropertySerializer,
+)
 from drf_spectacular.utils import extend_schema
 from apps.properties.pagination import PropertyPagination
 from rest_framework.permissions import IsAuthenticated
+from rest_framework import status
 
 
 # Create your views here.
@@ -245,3 +251,59 @@ class PropertyTaxAPIView(APIView):
             return CustomResponse.error(
                 data={}, status_code=400, message="Invalid data"
             )
+
+
+class AddToFavouritesView(APIView):
+    """
+    API view to add a property to user's favorites.
+    """
+
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+
+    @extend_schema(
+        responses=FavouritePropertySerializer,
+        description="Add property to favorites",
+    )
+    async def post(self, request, slug):
+        property = await get_object_or_404(Property, slug=slug)
+
+        # Create a new FavouriteProperty instance
+        favourite_property_data = {"user": request.user.id, "property": property.id}
+        serializer = FavouritePropertySerializer(data=favourite_property_data)
+
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return CustomResponse.success(
+                data=serializer.data,
+                message="Property added to favorites",
+            )
+
+        return CustomResponse.error(data=serializer.errors, message="Server error")
+
+
+class DeletePropertyFromFavouritesView(APIView):
+    """
+    API view to remove a property from user's favorites.
+    """
+
+    permission_classes = [IsAuthenticated]
+    throttle_classes = [UserRateThrottle]
+
+    @extend_schema(
+        responses=status.HTTP_204_NO_CONTENT,
+        description="Remove property from favorites",
+    )
+    async def post(self, request, slug):
+        property = await get_object_or_404(Property, slug=slug)
+
+        try:
+            FavouriteProperty.objects.filter(
+                user=request.user, property=property
+            ).delete()
+            return CustomResponse.success(
+                message="Property removed from favorites",
+            )
+
+        except Exception:
+            return CustomResponse.error(message="Server Error")

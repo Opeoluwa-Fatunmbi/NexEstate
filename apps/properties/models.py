@@ -161,3 +161,22 @@ class PropertyViews(BaseModel):
     class Meta:
         verbose_name = "Total Views on Property"
         verbose_name_plural = "Total Property Views"
+
+
+# models.py
+class FavouriteProperty(BaseModel):
+    user = models.ForeignKey(
+        User,
+        verbose_name=_("User"),
+        related_name="favorite_properties",
+        on_delete=models.CASCADE,
+    )
+    property = models.ForeignKey(
+        Property,
+        verbose_name=_("Property"),
+        related_name="favorited_by",
+        on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return f"{self.user.email}'s Favorite: {self.property.title}"

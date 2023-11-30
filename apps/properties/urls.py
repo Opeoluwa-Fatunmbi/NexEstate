@@ -9,6 +9,8 @@ from apps.properties.views import (
     UploadPropertyImageView,
     PropertySearchAPIView,
     PropertyTaxAPIView,
+    AddToFavouritesView,
+    DeletePropertyFromFavouritesView,
 )
 
 app_name = "properties"
@@ -24,4 +26,14 @@ urlpatterns = [
     path("create/", CreatePropertyView.as_view(), name="create"),
     path("<slug:slug>/upload/", UploadPropertyImageView.as_view(), name="upload"),
     path("tax/", PropertyTaxAPIView.as_view(), name="tax"),
+    path(
+        "<slug:slug>/add-to-favorites/",
+        AddToFavouritesView.as_view(),
+        name="add-to-favorites",
+    ),
+    path(
+        "<slug:slug>/remove-from-favorites/",
+        DeletePropertyFromFavouritesView.as_view(),
+        name="remove-from-favorites",
+    ),
 ]
