@@ -58,12 +58,17 @@ class Profile(BaseModel):
     is_agent = models.BooleanField(
         verbose_name=_("Agent"), default=False, help_text=_("Are you an agent?")
     )
-    top_agent = models.BooleanField(verbose_name=_("Top Agent"), default=False)
+    is_top_agent = models.BooleanField(verbose_name=_("Top Agent"), default=False)
     rating = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
     num_reviews = models.IntegerField(
         verbose_name=_("Number of Reviews"), default=0, null=True, blank=True
     )
+    num_properties = models.IntegerField(
+        verbose_name=_("Number of Properties"), default=0, null=True, blank=True
+    )
 
+    def __str__(self):
+        return f"{self.user.email}'s profile"
 
-def __str__(self):
-    return f"{self.user.email}'s profile"
+    class Meta:
+        app_label = "profiles"

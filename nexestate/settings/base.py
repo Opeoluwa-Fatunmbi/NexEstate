@@ -63,6 +63,7 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -240,8 +241,8 @@ logging.config.dictConfig(
 
 
 SPECTACULAR_SETTINGS = {
-    "TITLE": "iBet API",
-    "DESCRIPTION": "Bet on your own skills!",
+    "TITLE": "NexEstate API",
+    "DESCRIPTION": "Let us connect you with your dream home",
     "VERSION": "1.0.0",
     "SERVE_INCLUDE_SCHEMA": False,
 }
@@ -265,7 +266,7 @@ JAZZMIN_SETTINGS = {
     # Relative path to a favicon for your site, will default to site_logo if absent (ideally 32x32 px)
     "site_icon": "media/logo.png",
     # Welcome text on the login screen
-    "welcome_sign": "Welcome to NetEstate Admin Section",
+    "welcome_sign": "Welcome to NexEstate Admin Section",
     # Copyright on the footer
     "copyright": "NexEstate Ltd",
     # The model admin to search from the search bar, search bar omitted if excluded
@@ -351,14 +352,21 @@ JAZZMIN_SETTINGS = {
 
 # Cache settings
 
-# settings.py
-
 CACHES = {
     "default": {
-        "BACKEND": "django.core.cache.backends.memcached.MemcachedCache",
+        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
         "LOCATION": "127.0.0.1:11211",
     }
 }
+
+
+# Debug Toolbar settings
+
+DEBUG_TOOLBAR_PANELS = [
+    "debug_toolbar.panels.cache.CachePanel",
+    # other panels
+]
+
 
 # Channels settings
 
@@ -373,3 +381,9 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+
+# JWT Settings
+
+ACCESS_TOKEN_LIFETIME_MINUTES = config("ACCESS_TOKEN_LIFETIME_MINUTES")
+REFRESH_TOKEN_LIFETIME_MINUTES = config("REFRESH_TOKEN_LIFETIME_MINUTES")

@@ -20,6 +20,7 @@ daphne==4.0.0
 defusedxml==0.7.1
 Django==4.2.3
 django-autoslug==1.9.9
+django-cloudinary-storage==0.3.0
 django-countries==7.5.1
 django-debug-toolbar==4.1.0
 django-jazzmin==2.6.0
@@ -38,11 +39,14 @@ mypy-extensions==1.0.0
 oauthlib==3.2.2
 packaging==23.1
 pathspec==0.11.2
+phonenumberslite==8.13.26
+Pillow==10.1.0
 platformdirs==3.10.0
 pyasn1==0.5.1
 pyasn1-modules==0.3.0
 pycparser==2.21
 PyJWT==1.7.1
+pymemcache==4.0.0
 pyOpenSSL==23.3.0
 python-decouple==3.8
 python-dotenv==1.0.0

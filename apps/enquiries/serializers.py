@@ -5,7 +5,7 @@ from apps.enquiries.models import Enquiry
 class EnquirySerializer(serializers.Serializer):
     name = serializers.CharField(max_length=100)
     phone_number = serializers.CharField(max_length=30, default="+254703229589")
-    email = serializers.EmailField(("Email"))
+    email = serializers.EmailField()
     subject = serializers.CharField(max_length=100)
     message = serializers.CharField(max_length=100)
 

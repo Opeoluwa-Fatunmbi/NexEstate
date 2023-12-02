@@ -5,16 +5,12 @@ import uuid
 from .managers import UserManager
 from django.conf import settings
 from django.utils import timezone
-from apps.core.models import BaseModel
+from apps.common.models import BaseModel
 
 # Create your models here.
 
 
 class User(AbstractBaseUser, PermissionsMixin):
-    class ROLES_CHOICES(models.TextChoices):
-        AGENT = "AGENT", _("Agent")
-        BUYER = "BUYER", _("Buyer")
-
     id = models.UUIDField(
         default=uuid.uuid4, primary_key=True, unique=True, editable=False
     )
@@ -25,9 +21,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(_("active"), default=True)
     created_at = models.DateTimeField(_("created_at"), auto_now_add=True)
     updated_at = models.DateTimeField(_("updated_at"), auto_now=True)
-    role = models.CharField(
-        _("role"), max_length=50, choices=ROLES_CHOICES.choices, default="BUYER"
-    )
     is_superuser = models.BooleanField(_("superuser_status"), default=False)
     is_email_verified = models.BooleanField(_("email_verified"), default=False)
     terms_agreement = models.BooleanField(_("terms_agreement"), default=False)

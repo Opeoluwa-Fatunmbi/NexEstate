@@ -2,7 +2,6 @@ from django.utils import timezone
 from rest_framework.permissions import BasePermission
 from apps.accounts.auth import Authentication
 from apps.accounts.models import User, Jwt
-from apps.common.models import File, GuestUser
 from apps.common.exceptions import RequestError
 from datetime import timedelta
 from uuid import UUID
@@ -22,28 +21,6 @@ class IsAuthenticatedCustom(BasePermission):
         if request.user and request.user.is_authenticated:
             return True
         return False
-
-
-class IsGuestOrAuthenticatedCustom(BasePermission):
-    def has_permission(self, request, view):
-        http_auth = request.META.get("HTTP_AUTHORIZATION")
-        guest_id = request.headers.get("Guestuserid")
-        if http_auth:
-            user = Authentication.decodeAuthorization(http_auth)
-            if not user:
-                raise RequestError(
-                    err_msg="Auth Token is Invalid or Expired!", status_code=401
-                )
-            request.user = user
-        elif guest_id:
-            guest = GuestUser.objects.filter(id=guest_id)
-            if guest.exists():
-                request.user = guest.get()
-            else:
-                request.user = None
-        else:
-            request.user = None
-        return True
 
 
 def is_uuid(value):
