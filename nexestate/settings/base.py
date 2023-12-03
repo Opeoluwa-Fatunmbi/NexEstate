@@ -39,6 +39,7 @@ THIRD_PARTY_APPS = [
     "rest_framework",
     "channels",
     "debug_toolbar",
+    "django_filters",
     "cloudinary",
     "cloudinary_storage",
     "drf_spectacular",
@@ -58,6 +59,7 @@ LOCAL_APPS = [
     "apps.reports",
     "apps.analytics",
     "apps.chats",
+    "apps.ratings",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS

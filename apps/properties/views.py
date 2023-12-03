@@ -1,8 +1,11 @@
 from django.shortcuts import get_object_or_404
 from apps.properties.models import Property, PropertyViews, FavouriteProperty
 from adrf.views import APIView
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters, generics, status
 from apps.common.responses import CustomResponse
 from rest_framework.throttling import UserRateThrottle
+from rest_framework.generics import ListAPIView
 from apps.properties.serializers import (
     PropertySerializer,
     PropertyCreateSerializer,
@@ -12,44 +15,59 @@ from drf_spectacular.utils import extend_schema
 from apps.properties.pagination import PropertyPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
+import django_filters
+
+
+class PropertyFilter(django_filters.FilterSet):
+    advert_type = django_filters.CharFilter(
+        field_name="advert_type", lookup_expr="iexact"
+    )
+
+    property_type = django_filters.CharFilter(
+        field_name="property_type", lookup_expr="iexact"
+    )
+
+    price = django_filters.NumberFilter()
+    price__gt = django_filters.NumberFilter(field_name="price", lookup_expr="gt")
+    price__lt = django_filters.NumberFilter(field_name="price", lookup_expr="lt")
+
+    class Meta:
+        model = Property
+        fields = ["advert_type", "property_type", "price"]
 
 
 # Create your views here.
-class PropertyListAPIView(APIView):
-    throttle_classes = [UserRateThrottle]
-    paginagion_class = PropertyPagination
-    permission_classes = [IsAuthenticated]
+class ListAllPropertiesAPIView(generics.ListAPIView):
+    serializer_class = PropertySerializer
+    queryset = Property.objects.all().order_by("-created_at")
+    pagination_class = PropertyPagination
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
 
-    @extend_schema(
-        responses=PropertySerializer(many=True),
-        description="List of all properties",
-    )
-    async def get(self, request):
-        properties = await Property.objects.all().order_by("-created_at")
-
-        serializer = PropertySerializer(properties, many=True)
-        return CustomResponse(
-            data=serializer.data, message="Properties retrieved successfully"
-        )
+    filterset_class = PropertyFilter
+    search_fields = ["country", "city"]
+    ordering_fields = ["created_at"]
 
 
-class ListAgentsPropertiesView(APIView):
-    throttle_classes = [UserRateThrottle]
-    paginagion_class = PropertyPagination
+class ListAgentsPropertiesAPIView(generics.ListAPIView):
+    serializer_class = PropertySerializer
+    pagination_class = PropertyPagination
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_class = PropertyFilter
+    search_fields = ["country", "city"]
+    ordering_fields = ["created_at"]
 
-    @extend_schema(
-        responses=PropertySerializer(many=True),
-        description="List of all properties",
-    )
-    async def get(self, request):
-        properties = await Property.objects.filter(agent=request.user).order_by(
-            "-created_at"
-        )
-
-        serializer = PropertySerializer(properties, many=True)
-        return CustomResponse(
-            data=serializer.data, message="Properties retrieved successfully"
-        )
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Property.objects.filter(user=user).order_by("-created_at")
+        return queryset
 
 
 class PropertyDetailView(APIView):
@@ -127,7 +145,7 @@ class DeletePropertyView(APIView):
         property = await Property.objects.get(slug=slug)
 
         property.delete()
-        return CustomResponse(message="Property deleted successfully")
+        return CustomResponse.success(message="Property deleted successfully")
 
 
 class UploadPropertyImageView(APIView):

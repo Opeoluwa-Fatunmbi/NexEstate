@@ -21,6 +21,7 @@ urlpatterns = [
     # path("reports/", include("apps.reports.urls")),
     # path("analytics/", include("apps.analytics.urls")),
     path("enquiries/", include("apps.enquiries.urls")),
+    path("ratings/", include("apps.ratings.urls")),
     # drf-spectacular
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(

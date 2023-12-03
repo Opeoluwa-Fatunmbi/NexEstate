@@ -1,7 +1,7 @@
 from django.urls import path
 from apps.properties.views import (
-    PropertyListAPIView,
-    ListAgentsPropertiesView,
+    ListAllPropertiesAPIView,
+    ListAgentsPropertiesAPIView,
     PropertyDetailView,
     UpdatePropertyView,
     DeletePropertyView,
@@ -17,8 +17,8 @@ app_name = "properties"
 
 
 urlpatterns = [
-    path("", PropertyListAPIView.as_view(), name="list"),
-    path("agents/", ListAgentsPropertiesView.as_view(), name="agents"),
+    path("", ListAllPropertiesAPIView.as_view(), name="list"),
+    path("agents/", ListAgentsPropertiesAPIView.as_view(), name="agents"),
     path("search/", PropertySearchAPIView.as_view(), name="search"),
     path("<slug:slug>/", PropertyDetailView.as_view(), name="detail"),
     path("<slug:slug>/update/", UpdatePropertyView.as_view(), name="update"),
