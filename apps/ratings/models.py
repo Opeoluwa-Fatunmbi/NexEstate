@@ -21,6 +21,7 @@ class Rating(BaseModel):
         on_delete=models.SET_NULL,
         null=True,
     )
+
     agent = models.ForeignKey(
         Profile,
         verbose_name=_("Agent being rated"),
@@ -28,6 +29,7 @@ class Rating(BaseModel):
         on_delete=models.SET_NULL,
         null=True,
     )
+
     rating = models.IntegerField(
         verbose_name=_("Rating"),
         choices=Range.choices,
@@ -37,7 +39,7 @@ class Rating(BaseModel):
     comment = models.TextField(verbose_name=_("Comment"))
 
     class Meta:
-        unique_together = ["rater", "agent"]
+        unique_together = ["user", "agent"]
 
     def __str__(self):
         return f"{self.agent} rated at {self.rating}"

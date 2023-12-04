@@ -66,6 +66,15 @@ class Profile(BaseModel):
     num_properties = models.IntegerField(
         verbose_name=_("Number of Properties"), default=0, null=True, blank=True
     )
+    num_sales = models.IntegerField(
+        verbose_name=_("Number of Sales"), default=0, null=True, blank=True
+    )
+    num_purchases = models.IntegerField(
+        verbose_name=_("Number of Purchases"), default=0, null=True, blank=True
+    )
+    num_rentals = models.IntegerField(
+        verbose_name=_("Number of Rentals"), default=0, null=True, blank=True
+    )
 
     def __str__(self):
         return f"{self.user.email}'s profile"
