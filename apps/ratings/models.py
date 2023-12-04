@@ -15,7 +15,7 @@ class Rating(BaseModel):
         RATING_4 = 4, _("Very Good")
         RATING_5 = 5, _("Excellent")
 
-    rater = models.ForeignKey(
+    user = models.ForeignKey(
         User,
         verbose_name=_("User providing the rating"),
         on_delete=models.SET_NULL,

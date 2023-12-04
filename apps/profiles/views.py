@@ -22,7 +22,7 @@ class AgentListView(APIView):
     def get(self, request):
         queryset = Profile.objects.filter(is_agent=True)
         serializer = self.serializer_class(queryset, many=True)
-        return CustomResponse(serializer.data, status=200)
+        return CustomResponse.success(serializer.data, status=200)
 
 
 class TopAgentsListView(APIView):
@@ -36,7 +36,7 @@ class TopAgentsListView(APIView):
     def get(self, request):
         queryset = Profile.objects.filter(is_agent=True).order_by("-rating")[:10]
         serializer = self.serializer_class(queryset, many=True)
-        return CustomResponse(serializer.data, status=200)
+        return CustomResponse.success(serializer.data, status=200)
 
 
 class GetProfileView(APIView):
@@ -54,7 +54,7 @@ class GetProfileView(APIView):
         if profile.user != user:
             raise ProfileNotFound
         serializer = self.serializer_class(profile)
-        return CustomResponse(serializer.data, status=200)
+        return CustomResponse.success(serializer.data, status=200)
 
 
 class UpdateProfileView(APIView):
@@ -74,4 +74,4 @@ class UpdateProfileView(APIView):
         serializer = self.serializer_class(profile, data=request.data)
         serializer.is_valid(raise_exception=True)
         serializer.save()
-        return CustomResponse(serializer.data, status=200)
+        return CustomResponse.success(serializer.data, status=200)
