@@ -62,7 +62,7 @@ class Property(BaseModel):
     )
     price = models.DecimalField(
         verbose_name=_("Price"), max_digits=8, decimal_places=2, default=0.0
-    )
+    )  # Cents(Stripe)
     tax = models.DecimalField(
         verbose_name=_("Property Tax"),
         max_digits=6,
