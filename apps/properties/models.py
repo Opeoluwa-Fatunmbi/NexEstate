@@ -119,6 +119,9 @@ class Property(BaseModel):
         verbose_name=_("Published Status"), default=False
     )
     views = models.IntegerField(verbose_name=_("Total Views"), default=0)
+    session_id = models.CharField(
+        verbose_name=_("Stripe Session ID"), max_length=255, blank=True, null=True
+    )
 
     objects = models.Manager()
     published = PropertyPublishedManager()
