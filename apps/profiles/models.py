@@ -76,6 +76,8 @@ class Profile(BaseModel):
         verbose_name=_("Number of Rentals"), default=0, null=True, blank=True
     )
 
+    # salary range
+
     def __str__(self):
         return f"{self.user.email}'s profile"
 
