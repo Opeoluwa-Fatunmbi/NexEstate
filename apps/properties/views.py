@@ -16,6 +16,9 @@ from apps.properties.pagination import PropertyPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 import django_filters
+from django.conf import settings
+
+genai.configure(api_key=GOOGLE_API_KEY)
 
 
 class PropertyFilter(django_filters.FilterSet):
