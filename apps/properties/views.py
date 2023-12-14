@@ -10,30 +10,26 @@ from apps.properties.serializers import (
     PropertySerializer,
     PropertyCreateSerializer,
     FavouritePropertySerializer,
+    PropertyDescriptionSerializer,
 )
 from drf_spectacular.utils import extend_schema
 from apps.properties.pagination import PropertyPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 import django_filters
-import pathlib
-import textwrap
-
 import google.generativeai as genai
-
 from nexestate.settings.base import GOOGLE_API_KEY
 
 
 genai.configure(api_key=GOOGLE_API_KEY)
 
 
-for m in genai.list_models():
-    if "generateContent" in m.supported_generation_methods:
-        print(m.name)
-
-model = genai.GenerativeModel("gemini-pro")
-response = model.generate_content("What is the meaning of life?")
-print(response.text)
+# for m in genai.list_models():
+#    if "generateContent" in m.supported_generation_methods:
+#        print(m.name)
+# model = genai.GenerativeModel("gemini-pro")
+# response = model.generate_content("What is the meaning of life?")
+# print(response.text)
 
 
 class PropertyFilter(django_filters.FilterSet):
@@ -101,8 +97,10 @@ class PropertyDetailView(APIView):
         property = await Property.objects.get(slug=slug)
 
         serializer = PropertySerializer(property)
-        return CustomResponse(
-            data=serializer.data, message="Property retrieved successfully"
+        return CustomResponse.success(
+            data=serializer.data,
+            message="Property retrieved successfully",
+            status_code=200,
         )
 
 
@@ -122,6 +120,45 @@ class UpdatePropertyView(APIView):
             serializer.save()
             return CustomResponse.success(
                 data=serializer.data, message="Property updated successfully"
+            )
+        else:
+            return CustomResponse.error(
+                data=serializer.errors, status_code=400, message="Invalid data"
+            )
+
+
+class UpdatePropertyDescriptionView(APIView):
+    serializer_class = PropertyDescriptionSerializer
+    throttle_classes = [UserRateThrottle]
+    paginagion_class = PropertyPagination
+
+    @extend_schema(
+        responses=PropertySerializer,
+        description="Update details of a property",
+    )
+    async def put(self, request, slug):
+        property = await Property.objects.get(slug=slug)
+
+        # Update property details based on request data
+
+        serializer = PropertyDescriptionSerializer(
+            property, data=request.data, partial=True
+        )
+        if serializer.is_valid():
+            # Generate description using Gemini Pro
+            model = genai.GenerativeModel("gemini-pro")
+            generated_description = model.generate_content(
+                f"Describe this property: {serializer.data['title']}, {serializer.data['bedrooms']} bedrooms, {serializer.data['bathrooms']} bathrooms, located in {serializer.data['city']}, {serializer.data['country']}."
+            ).text
+
+            # Update property description with generated content
+            property.description = generated_description
+            serializer.save()
+
+            return CustomResponse.success(
+                data=serializer.data,
+                status_code=200,
+                message="Property updated successfully",
             )
         else:
             return CustomResponse.error(

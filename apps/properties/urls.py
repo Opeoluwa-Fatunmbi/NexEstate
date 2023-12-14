@@ -11,6 +11,7 @@ from apps.properties.views import (
     PropertyTaxAPIView,
     AddToFavouritesView,
     DeletePropertyFromFavouritesView,
+    UpdatePropertyDescriptionView,
 )
 
 app_name = "properties"
@@ -35,5 +36,10 @@ urlpatterns = [
         "<slug:slug>/remove-from-favorites/",
         DeletePropertyFromFavouritesView.as_view(),
         name="remove-from-favorites",
+    ),
+    path(
+        "<slug:slug>/update-description/",
+        UpdatePropertyDescriptionView.as_view(),
+        name="update-description",
     ),
 ]

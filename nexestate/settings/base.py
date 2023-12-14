@@ -272,7 +272,7 @@ JAZZMIN_SETTINGS = {
     # Copyright on the footer
     "copyright": "NexEstate Ltd",
     # The model admin to search from the search bar, search bar omitted if excluded
-    "search_model": "accountsUser",
+    "search_model": "accounts.User",
     # Field name on user model that contains avatar ImageField/URLField/Charfield or a callable that receives the user
     "user_avatar": "avatar",
     ############
@@ -298,6 +298,7 @@ JAZZMIN_SETTINGS = {
         {"app": "profiles"},
         {"app": "reports"},
         {"app": "chats"},
+        {"app": "ratings"},
         {"app": "sites"},
     ],
     #############
@@ -333,6 +334,11 @@ JAZZMIN_SETTINGS = {
         "profiles.profile": "fas fa-user",
         "reports.report": "fas fa-chart-bar",
         "chats.chat": "fas fa-comments",
+        "analytics.analytics": "fas fa-chart-line",
+        "properties.propertycategories": "fas fa-list",
+        "properties.property": "fas fa-home",
+        "properties.propertyviews": "fas fa-eye",
+        "ratings.rating": "fas fa-star",
         "sites.site": "fas fa-globe",
     },
     # Icons that are used when one is not manually specified

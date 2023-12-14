@@ -3,6 +3,7 @@ from apps.accounts.models import User
 from apps.common.models import BaseModel
 from apps.profiles.models import Profile
 from django.utils.translation import gettext_lazy as _
+from apps.properties.models import Property
 
 # Create your models here.
 
@@ -22,13 +23,13 @@ class Rating(BaseModel):
         null=True,
     )
 
-    agent = models.ForeignKey(
-        Profile,
-        verbose_name=_("Agent being rated"),
-        related_name="agent_review",
-        on_delete=models.SET_NULL,
-        null=True,
-    )
+    # agent = models.ForeignKey(
+    #    Profile,
+    #    verbose_name=_("Agent being rated"),
+    #    related_name="agent_review",
+    #    on_delete=models.SET_NULL,
+    #    null=True,
+    # )
 
     rating = models.IntegerField(
         verbose_name=_("Rating"),
@@ -37,9 +38,10 @@ class Rating(BaseModel):
         default=0,
     )
     comment = models.TextField(verbose_name=_("Comment"))
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ["user", "agent"]
+    # class Meta:
+    #     unique_together = ["user", "agent"]
 
     def __str__(self):
         return f"{self.agent} rated at {self.rating}"

@@ -8,6 +8,28 @@ from django_countries.fields import CountryField
 from apps.common.models import BaseModel
 from apps.accounts.models import User
 from apps.properties.managers import PropertyPublishedManager
+from statistics import mean
+
+
+class PropertyCategories(BaseModel):
+    name = models.CharField(
+        verbose_name=_("Category Name"), max_length=250, unique=True
+    )
+    slug = AutoSlugField(populate_from="category_name", unique=True, always_update=True)
+    description = models.TextField(
+        verbose_name=_("Category Description"),
+        default="Default description",
+    )
+    image = models.ImageField(
+        verbose_name=_("Category Image"), default="/house_sample.jpg"
+    )
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = "Property Category"
+        verbose_name_plural = "Property Categories"
 
 
 class Property(BaseModel):
@@ -122,6 +144,29 @@ class Property(BaseModel):
     session_id = models.CharField(
         verbose_name=_("Stripe Session ID"), max_length=255, blank=True, null=True
     )
+    category = models.ForeignKey(
+        PropertyCategories,
+        verbose_name=_("Property Category"),
+        related_name="property_category",
+        on_delete=models.DO_NOTHING,
+        blank=True,
+        null=True,
+    )
+    is_available = models.BooleanField(  # For Sale or For Rent
+        verbose_name=_("Is Available"), default=True
+    )
+    is_featured = models.BooleanField(verbose_name=_("Is Featured"), default=False)
+    is_published = models.BooleanField(verbose_name=_("Is Published"), default=False)
+    is_sold = models.BooleanField(verbose_name=_("Is Sold"), default=False)
+    is_rented = models.BooleanField(verbose_name=_("Is Rented"), default=False)
+    is_occupied = models.BooleanField(verbose_name=_("Is Occupied"), default=False)
+    is_new = models.BooleanField(verbose_name=_("Is New"), default=False)
+    is_hot_deal = models.BooleanField(verbose_name=_("Is Hot Deal"), default=False)
+    is_top_rated = models.BooleanField(verbose_name=_("Is Top Rated"), default=False)
+    is_verified = models.BooleanField(verbose_name=_("Is Verified"), default=False)
+    is_approved = models.BooleanField(verbose_name=_("Is Approved"), default=False)
+    is_deleted = models.BooleanField(verbose_name=_("Is Deleted"), default=False)
+    is_archived = models.BooleanField(verbose_name=_("Is Archived"), default=False)
 
     objects = models.Manager()
     published = PropertyPublishedManager()
@@ -149,6 +194,22 @@ class Property(BaseModel):
         price_after_tax = float(round(property_price + tax_amount, 2))
         return price_after_tax
 
+    @property
+    def image_url(self):
+        try:
+            url = self.image.url
+        except:
+            url = ""
+        return url
+
+    @property
+    def avg_rating(self):
+        reviews = [review.rating for review in self.reviews.all()]
+        avg = 0
+        if len(reviews) > 0:
+            avg = round(mean(list(reviews)))  # Mean
+        return avg
+
 
 class PropertyViews(BaseModel):
     ip = models.CharField(verbose_name=_("IP Address"), max_length=250)
@@ -162,7 +223,7 @@ class PropertyViews(BaseModel):
         )
 
     class Meta:
-        verbose_name = "Total Views on Property"
+        verbose_name = "Total Property View"
         verbose_name_plural = "Total Property Views"
 
 
