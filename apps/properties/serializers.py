@@ -1,5 +1,6 @@
 from django_countries.serializer_fields import CountryField
-from django_countries.serializers import CountryFieldMixin
+
+# from django_countries.serializers import CountryFieldMixin
 from rest_framework import serializers
 from .models import Property, PropertyViews, FavouriteProperty
 
@@ -15,7 +16,7 @@ class PropertySerializer(serializers.Serializer):
     photo4 = serializers.SerializerMethodField()
 
     def get_user(self, obj):
-        return obj.user.username
+        return obj.user.email
 
     def get_cover_photo(self, obj):
         return obj.cover_photo.url
@@ -36,24 +37,62 @@ class PropertySerializer(serializers.Serializer):
         return obj.user.profile.profile_photo.url
 
 
-class PropertyCreateSerializer(serializers.ModelSerializer):
+class PropertyCreateSerializer(serializers.Serializer):
+    # user = serializers.IntegerField()
+    city = serializers.CharField(max_length=255)
+    title = serializers.CharField(max_length=255)
+    bathrooms = serializers.IntegerField()
+    bedrooms = serializers.IntegerField()
     country = CountryField(name_only=True)
+    cover_photo = serializers.ImageField()
+    photo1 = serializers.ImageField()
+    photo2 = serializers.ImageField()
+    photo3 = serializers.ImageField()
+    photo4 = serializers.ImageField()
 
-    class Meta:
-        model = Property
-        exclude = ["updated_at", "pkid"]
+    def create(self, validated_data):
+        return Property.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.user = validated_data.get("user", instance.user)
+        instance.city = validated_data.get("city", instance.city)
+        instance.country = validated_data.get("country", instance.country)
+        instance.cover_photo = validated_data.get("cover_photo", instance.cover_photo)
+        instance.photo1 = validated_data.get("photo1", instance.photo1)
+        instance.photo2 = validated_data.get("photo2", instance.photo2)
+        instance.photo3 = validated_data.get("photo3", instance.photo3)
+        instance.photo4 = validated_data.get("photo4", instance.photo4)
+        instance.title = validated_data.get("title", instance.title)
+        instance.save()
+        return instance
 
 
-class PropertyViewSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = PropertyViews
-        exclude = ["updated_at", "pkid"]
+class PropertyViewSerializer(serializers.Serializer):
+    ip = serializers.CharField(max_length=250)
+    property = serializers.IntegerField()
+
+    def create(self, validated_data):
+        return PropertyViews.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.ip = validated_data.get("ip", instance.ip)
+        instance.property = validated_data.get("property", instance.property)
+        instance.save()
+        return instance
 
 
-class FavouritePropertySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FavouriteProperty
-        fields = "__all__"
+class FavouritePropertySerializer(serializers.Serializer):
+    user = serializers.IntegerField()
+    property = serializers.IntegerField()
+
+    def create(self, validated_data):
+        return FavouriteProperty.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.user = validated_data.get("user", instance.user)
+        instance.property = validated_data.get("property", instance.property)
+        instance.save()
+        return instance
 
 
 class PropertyDescriptionSerializer(serializers.Serializer):

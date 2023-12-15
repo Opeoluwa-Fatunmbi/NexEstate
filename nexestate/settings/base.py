@@ -55,6 +55,7 @@ LOCAL_APPS = [
     "apps.properties",
     "apps.enquiries",
     "apps.payments",
+    "apps.profiles",
     "apps.notifications",
     "apps.reports",
     "apps.analytics",
@@ -360,12 +361,12 @@ JAZZMIN_SETTINGS = {
 
 # Cache settings
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
-        "LOCATION": "127.0.0.1:11211",
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
+#         "LOCATION": "127.0.0.1:11211",
+#     }
+# }
 
 
 # Debug Toolbar settings
@@ -380,16 +381,16 @@ DEBUG_TOOLBAR_PANELS = [
 
 ASGI_APPLICATION = "nexestate.asgi.application"
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            # Use Redis as the channel layer backend
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
-}
-
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             # Use Redis as the channel layer backend
+#             "hosts": [("127.0.0.1", 6379)],
+#         },
+#     },
+# }
+#
 
 # JWT Settings
 

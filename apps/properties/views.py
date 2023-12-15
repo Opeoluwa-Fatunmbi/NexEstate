@@ -1,6 +1,7 @@
 from django.shortcuts import get_object_or_404
 from apps.properties.models import Property, PropertyViews, FavouriteProperty
 from adrf.views import APIView
+import logging
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters, generics, status
 from apps.common.responses import CustomResponse
@@ -10,7 +11,7 @@ from apps.properties.serializers import (
     PropertySerializer,
     PropertyCreateSerializer,
     FavouritePropertySerializer,
-    PropertyDescriptionSerializer,
+    # PropertyDescriptionSerializer,
 )
 from drf_spectacular.utils import extend_schema
 from apps.properties.pagination import PropertyPagination
@@ -18,6 +19,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 import django_filters
 import google.generativeai as genai
+
+
+logger = logging.getLogger(__name__)
 from nexestate.settings.base import GOOGLE_API_KEY
 
 
@@ -127,58 +131,59 @@ class UpdatePropertyView(APIView):
             )
 
 
-class UpdatePropertyDescriptionView(APIView):
-    serializer_class = PropertyDescriptionSerializer
-    throttle_classes = [UserRateThrottle]
-    paginagion_class = PropertyPagination
-
-    @extend_schema(
-        responses=PropertySerializer,
-        description="Update details of a property",
-    )
-    async def put(self, request, slug):
-        property = await Property.objects.get(slug=slug)
-
-        # Update property details based on request data
-
-        serializer = PropertyDescriptionSerializer(
-            property, data=request.data, partial=True
-        )
-        if serializer.is_valid():
-            # Generate description using Gemini Pro
-            model = genai.GenerativeModel("gemini-pro")
-            generated_description = model.generate_content(
-                f"Describe this property: {serializer.data['title']}, {serializer.data['bedrooms']} bedrooms, {serializer.data['bathrooms']} bathrooms, located in {serializer.data['city']}, {serializer.data['country']}."
-            ).text
-
-            # Update property description with generated content
-            property.description = generated_description
-            serializer.save()
-
-            return CustomResponse.success(
-                data=serializer.data,
-                status_code=200,
-                message="Property updated successfully",
-            )
-        else:
-            return CustomResponse.error(
-                data=serializer.errors, status_code=400, message="Invalid data"
-            )
+# class UpdatePropertyDescriptionView(APIView):
+#    serializer_class = PropertyDescriptionSerializer
+#    throttle_classes = [UserRateThrottle]
+#    paginagion_class = PropertyPagination
+#
+#    @extend_schema(
+#        responses=PropertySerializer,
+#        description="Update details of a property",
+#    )
+#    async def put(self, request, slug):
+#        property = await Property.objects.get(slug=slug)
+#
+#        # Update property details based on request data
+#
+#        serializer = PropertyDescriptionSerializer(
+#            property, data=request.data, partial=True
+#        )
+#        if serializer.is_valid():
+#            # Generate description using Gemini Pro
+#            model = genai.GenerativeModel("gemini-pro")
+#            generated_description = model.generate_content(
+#                f"Describe this property: {serializer.data['title']}, {serializer.data['bedrooms']} bedrooms, {serializer.data['bathrooms']} bathrooms, located in {serializer.data['city']}, {serializer.data['country']}."
+#            ).text
+#
+#            # Update property description with generated content
+#            property.description = generated_description
+#            serializer.save()
+#
+#            return CustomResponse.success(
+#                data=serializer.data,
+#                status_code=200,
+#                message="Property updated successfully",
+#            )
+#        else:
+#            return CustomResponse.error(
+#                data=serializer.errors, status_code=400, message="Invalid data"
+#            )
+#
 
 
 class CreatePropertyView(APIView):
     throttle_classes = [UserRateThrottle]
     paginagion_class = PropertyPagination
-    permission_classes = [IsAuthenticated]
+    serializer_class = PropertyCreateSerializer
 
     @extend_schema(
         responses=PropertySerializer,
-        description="Details of a property",
+        description="Create a new property",
     )
     async def post(self, request):
-        serializer = PropertySerializer(data=request.data)
+        serializer = PropertyCreateSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save()
+            serializer.save(user=request.user)
             return CustomResponse.success(
                 data=serializer.data, message="Property created successfully"
             )
@@ -231,7 +236,7 @@ class UploadPropertyImageView(APIView):
 
 class PropertySearchAPIView(APIView):
     throttle_classes = [UserRateThrottle]
-    serializer_class = PropertyCreateSerializer
+    serializer_class = PropertySerializer
     permission_classes = [IsAuthenticated]
 
     @extend_schema(
@@ -307,7 +312,7 @@ class PropertySearchAPIView(APIView):
 
 class PropertyTaxAPIView(APIView):
     throttle_classes = [UserRateThrottle]
-    serializer_class = PropertyCreateSerializer
+    serializer_class = PropertySerializer
     permission_classes = [IsAuthenticated]
 
     @extend_schema(

@@ -14,6 +14,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("accounts/", include("apps.accounts.urls")),
     path("properties/", include("apps.properties.urls")),
+    path("profiles/", include("apps.profiles.urls")),
     # path("chats/", include("apps.chats.urls")),
     # path("payments/", include("apps.payments.urls")),
     # path("notifications/", include("apps.notifications.urls")),

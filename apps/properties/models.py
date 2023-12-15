@@ -64,6 +64,7 @@ class Property(BaseModel):
     description = models.TextField(
         verbose_name=_("Description"),
         default="Default description",
+        unique=True,
     )
     country = CountryField(
         verbose_name=_("Country"),
@@ -202,13 +203,13 @@ class Property(BaseModel):
             url = ""
         return url
 
-    @property
-    def avg_rating(self):
-        reviews = [review.rating for review in self.reviews.all()]
-        avg = 0
-        if len(reviews) > 0:
-            avg = round(mean(list(reviews)))  # Mean
-        return avg
+    # @property
+    # def avg_rating(self):
+    #     reviews = [review.rating for review in self.reviews.all()]
+    #     avg = 0
+    #     if len(reviews) > 0:
+    #         avg = round(mean(list(reviews)))  # Mean
+    #     return avg
 
 
 class PropertyViews(BaseModel):
