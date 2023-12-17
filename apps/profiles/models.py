@@ -47,6 +47,7 @@ class Profile(BaseModel):
         blank=False,
         null=False,
     )
+    # salary_range = models.BigIntegerField()
     is_buyer = models.BooleanField(
         verbose_name=_("Buyer"),
         default=False,

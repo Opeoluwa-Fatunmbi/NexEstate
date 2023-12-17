@@ -82,7 +82,7 @@ class PropertyViewSerializer(serializers.Serializer):
 
 
 class FavouritePropertySerializer(serializers.Serializer):
-    user = serializers.IntegerField()
+    # user = serializers.IntegerField()
     property = serializers.IntegerField()
 
     def create(self, validated_data):
@@ -93,40 +93,3 @@ class FavouritePropertySerializer(serializers.Serializer):
         instance.property = validated_data.get("property", instance.property)
         instance.save()
         return instance
-
-
-class PropertyDescriptionSerializer(serializers.Serializer):
-    title = serializers.CharField(max_length=255)
-    description = serializers.CharField()
-    country = CountryField(name_only=True)
-    city = serializers.CharField(max_length=255)
-    bedrooms = serializers.IntegerField()
-    bathrooms = serializers.IntegerField()
-
-    def create(self, validated_data):
-        return Property.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.title = validated_data.get("title", instance.title)
-        instance.description = validated_data.get("description", instance.description)
-        instance.country = validated_data.get("country", instance.country)
-        instance.city = validated_data.get("city", instance.city)
-        instance.bedrooms = validated_data.get("bedrooms", instance.bedrooms)
-        instance.bathrooms = validated_data.get("bathrooms", instance.bathrooms)
-        instance.save()
-        return instance
-
-    # def validate(self, data):
-    #     if data["bedrooms"] > 10:
-    #         raise serializers.ValidationError("Bedrooms cannot be more than 10")
-    #     return data
-    #
-    # def validate_bedrooms(self, value):
-    #     if value > 10:
-    #         raise serializers.ValidationError("Bedrooms cannot be more than 10")
-    #     return value
-    #
-    # def validate_bathrooms(self, value):
-    #     if value > 10:
-    #         raise serializers.ValidationError("Bathrooms cannot be more than 10")
-    #     return value
