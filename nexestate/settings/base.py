@@ -45,6 +45,8 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "phonenumber_field",
     "django_countries",
+    "whitenoise",
+    "treblle",
 ]
 
 # Local apps
@@ -68,12 +70,14 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "treblle.middleware.TreblleMiddleware",
 ]
 
 ROOT_URLCONF = "nexestate.urls"
@@ -409,3 +413,11 @@ STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
 # GOOGLE API-KEY
 
 GOOGLE_API_KEY = config("GOOGLE_API_KEY")
+
+
+# TREBLLE SETTINGS
+
+TREBLLE_INFO = {
+    "api_key": config("TREBLLE_API_KEY"),
+    "project_id": config("TREBLLE_PROJECT_ID"),
+}

@@ -19,6 +19,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 import django_filters
 import google.generativeai as genai
+from asgiref.sync import sync_to_async
 
 
 logger = logging.getLogger(__name__)
@@ -88,24 +89,25 @@ class ListAgentsPropertiesAPIView(generics.ListAPIView):
         return queryset
 
 
-class PropertyDetailView(APIView):
-    throttle_classes = [UserRateThrottle]
-    pagination_class = PropertyPagination
-    permission_classes = [IsAuthenticated]
-
-    @extend_schema(
-        responses=PropertySerializer,
-        description="Details of a property",
-    )
-    async def get(self, request, slug):
-        property = await Property.objects.get(slug=slug)
-
-        serializer = PropertySerializer(property)
-        return CustomResponse.success(
-            data=serializer.data,
-            message="Property retrieved successfully",
-            status_code=200,
-        )
+# class PropertyDetailView(APIView):
+#    throttle_classes = [UserRateThrottle]
+#    pagination_class = PropertyPagination
+#    permission_classes = [IsAuthenticated]
+#
+#    @extend_schema(
+#        responses=PropertySerializer,
+#        description="Details of a property",
+#    )
+#    async def get(self, request, slug):
+#        property = await Property.objects.get(slug=slug)
+#
+#        serializer = PropertySerializer(property)
+#        return CustomResponse.success(
+#            data=serializer.data,
+#            message="Property retrieved successfully",
+#            status_code=200,
+#        )
+#
 
 
 class UpdatePropertyView(APIView):
@@ -183,13 +185,18 @@ class CreatePropertyView(APIView):
     async def post(self, request):
         serializer = PropertyCreateSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.save(user=request.user)
+            await sync_to_async(serializer.save)(user=request.user)
             return CustomResponse.success(
-                data=serializer.data, message="Property created successfully"
+                data=serializer.data,
+                message="Property created successfully",
+                status_code=201,
             )
         else:
             return CustomResponse.error(
-                data=serializer.errors, status_code=400, message="Invalid data"
+                data=serializer.errors,
+                status_code=400,
+                message="Invalid data",
+                status=400,
             )
 
 
@@ -385,3 +392,21 @@ class DeletePropertyFromFavouritesView(APIView):
 
         except Exception:
             return CustomResponse.error(message="Server Error")
+
+
+class ListFavoritePropertiesAPIView(generics.ListAPIView):
+    serializer_class = PropertySerializer
+    pagination_class = PropertyPagination
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter,
+    ]
+    filterset_class = PropertyFilter
+    search_fields = ["country", "city"]
+    ordering_fields = ["created_at"]
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Property.objects.filter(user=user).order_by("-created_at")
+        return queryset

@@ -2,7 +2,7 @@ from django.urls import path
 from apps.properties.views import (
     ListAllPropertiesAPIView,
     ListAgentsPropertiesAPIView,
-    PropertyDetailView,
+    # PropertyDetailView,
     UpdatePropertyView,
     DeletePropertyView,
     CreatePropertyView,
@@ -11,7 +11,7 @@ from apps.properties.views import (
     PropertyTaxAPIView,
     AddToFavouritesView,
     DeletePropertyFromFavouritesView,
-    #    UpdatePropertyDescriptionView,
+    ListFavoritePropertiesAPIView,
 )
 
 app_name = "properties"
@@ -21,7 +21,7 @@ urlpatterns = [
     path("", ListAllPropertiesAPIView.as_view(), name="list"),
     path("agents/", ListAgentsPropertiesAPIView.as_view(), name="agents"),
     path("search/", PropertySearchAPIView.as_view(), name="search"),
-    path("<slug:slug>/", PropertyDetailView.as_view(), name="detail"),
+    # path("<slug:slug>/", PropertyDetailView.as_view(), name="detail"),
     path("<slug:slug>/update/", UpdatePropertyView.as_view(), name="update"),
     path("<slug:slug>/delete/", DeletePropertyView.as_view(), name="delete"),
     path("create/", CreatePropertyView.as_view(), name="create"),
@@ -37,9 +37,9 @@ urlpatterns = [
         DeletePropertyFromFavouritesView.as_view(),
         name="remove-from-favorites",
     ),
-    #    path(
-    #        "<slug:slug>/update-description/",
-    #        UpdatePropertyDescriptionView.as_view(),
-    #        name="update-description",
-    #    ),
+    path(
+        "favorites/",
+        ListFavoritePropertiesAPIView.as_view(),
+        name="list-favorites",
+    ),
 ]

@@ -93,3 +93,8 @@ class FavouritePropertySerializer(serializers.Serializer):
         instance.property = validated_data.get("property", instance.property)
         instance.save()
         return instance
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation["user.id"] = instance.user.id
+        return representation

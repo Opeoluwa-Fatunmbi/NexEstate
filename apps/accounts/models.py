@@ -50,6 +50,8 @@ class Otp(BaseModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     code = models.IntegerField()
 
+    objects = UserManager()
+
     def check_expiration(self):
         now = timezone.now()
         diff = now - self.updated_at

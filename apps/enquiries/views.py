@@ -6,6 +6,8 @@ from apps.enquiries.models import Enquiry
 from apps.enquiries.emails import Util
 from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework.throttling import UserRateThrottle
+from apps.enquiries.pagination import EnquiryPagination
+from rest_framework.permissions import IsAuthenticated
 
 
 # Create your views here.
@@ -15,6 +17,8 @@ class CreateEnquiryView(APIView):
     serializer_class = EnquirySerializer
     throttle_classes = [UserRateThrottle]
     throttle_scope = "enquiry"
+    pagination_class = EnquiryPagination
+    permission_classes = (IsAuthenticated,)
 
     @extend_schema(
         description="Create an enquiry",
@@ -41,11 +45,15 @@ class GetEnquiriesView(APIView):
     serializer_class = EnquirySerializer
     throttle_classes = [UserRateThrottle]
     throttle_scope = "enquiry"
+    pagination_class = EnquiryPagination
+    permission_classes = (IsAuthenticated,)
 
     @extend_schema(description="Get all enquiries", responses={200: EnquirySerializer})
     def get(self, request):
         try:
-            enquiries = Enquiry.objects.all()
+            enquiries = Enquiry.objects.all().values(
+                "name", "email", "subject", "message"
+            )
             serializer = self.serializer_class(enquiries, many=True)
             return CustomResponse.success(
                 message="Enquiries fetched successfully",
@@ -61,6 +69,7 @@ class GetEnquiryDetailView(APIView):
     serializer_class = EnquirySerializer
     throttle_classes = [UserRateThrottle]
     throttle_scope = "enquiry"
+    permission_classes = (IsAuthenticated,)
 
     @extend_schema(
         description="Get a single enquiry", responses={200: EnquirySerializer}

@@ -47,7 +47,7 @@ class Profile(BaseModel):
         blank=False,
         null=False,
     )
-    # salary_range = models.BigIntegerField()
+    # salary_range = models.IntegerField()
     is_buyer = models.BooleanField(
         verbose_name=_("Buyer"),
         default=False,
@@ -79,8 +79,6 @@ class Profile(BaseModel):
     num_rentals = models.IntegerField(
         verbose_name=_("Number of Rentals"), default=0, null=True, blank=True
     )
-
-    # salary range
 
     def __str__(self):
         return f"{self.user.email}'s profile"

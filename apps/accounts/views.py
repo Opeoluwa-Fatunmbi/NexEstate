@@ -18,12 +18,14 @@ from apps.accounts.emails import Util
 
 from apps.accounts.auth import Authentication
 from apps.common.exceptions import RequestError
-from asgiref.sync import sync_to_async
-from apps.common.utils import IsAuthenticatedCustom, is_uuid
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.throttling import UserRateThrottle
 
 
 class RegisterView(APIView):
     serializer_class = RegisterSerializer
+    permission_classes = (AllowAny,)
+    throttle_classes = [UserRateThrottle]
 
     @extend_schema(
         summary="Register a new user",
@@ -58,6 +60,8 @@ class RegisterView(APIView):
 
 class LoginView(APIView):
     serializer_class = LoginSerializer
+    throttle_classes = [UserRateThrottle]
+    permission_classes = (AllowAny,)
 
     @extend_schema(
         summary="Login a user",
