@@ -18,7 +18,7 @@ class CreateEnquiryView(APIView):
     throttle_classes = [UserRateThrottle]
     throttle_scope = "enquiry"
     pagination_class = EnquiryPagination
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     @extend_schema(
         description="Create an enquiry",
@@ -46,7 +46,7 @@ class GetEnquiriesView(APIView):
     throttle_classes = [UserRateThrottle]
     throttle_scope = "enquiry"
     pagination_class = EnquiryPagination
-    permission_classes = (IsAuthenticated,)
+    # permission_classes = (IsAuthenticated,)
 
     @extend_schema(description="Get all enquiries", responses={200: EnquirySerializer})
     def get(self, request):

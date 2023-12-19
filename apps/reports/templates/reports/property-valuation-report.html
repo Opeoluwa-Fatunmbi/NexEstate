@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Property Valuation Report</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        h2 {
+            color: #555;
+            margin-top: 20px;
+        }
+
+        p {
+            color: #777;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        h3 {
+            color: #444;
+            margin-top: 16px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Property Valuation Report</h1>
+
+    <h2>Introduction</h2>
+    <p>Thank you for choosing our services to generate a property valuation report for the property located at {{ property.city }}, {{ property.country }}.</p>
+
+    <h2>Property Description</h2>
+    <p>{{ property.description }}</p>
+
+    <h2>Neighborhood Description</h2>
+    <p>Add your description of the neighborhood here.</p>
+
+    <h2>Scope of Work</h2>
+    <p>Add the scope of work for the property valuation here.</p>
+
+    <h2>Property Details</h2>
+    <ul>
+        <li>Property Type: {{ property.property_type }}</li>
+        <li>Bedrooms: {{ property.bedrooms }}</li>
+        <li>Bathrooms: {{ property.bathrooms }}</li>
+        <li>Total Floors: {{ property.total_floors }}</li>
+        <li>Tax: {{ property.tax }}</li>
+        <li>Plot Area: {{ property.plot_area }} square feet</li>
+        <li>Built Area: {{ property.built_area }} square feet</li>
+        <li>Parking: {{ property.parking }}</li>
+        <li>Furnished: {{ property.furnished }}</li>
+        <li>Zip Code: {{ property.zip_code }}</li>
+        <li>Price: {{ property.price }} dollars</li>
+    </ul>
+
+    <h2>Market Analysis</h2>
+    <p>Add your market analysis here.</p>
+
+    <h2>Valuation Approaches</h2>
+    <h3>Sales Comparison Approach</h3>
+    <p>Add your description of the sales comparison approach here.</p>
+
+    <h3>Cost Approach</h3>
+    <p>Add your description of the cost approach here.</p>
+
+    <h3>Income Approach</h3>
+    <p>Add your description of the income approach here.</p>
+
+    <h2>Conclusion</h2>
+    <p>Add your conclusion here.</p>
+</body>
+</html>

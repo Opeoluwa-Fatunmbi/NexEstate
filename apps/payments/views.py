@@ -1,7 +1,5 @@
 from adrf.views import APIView
 from apps.common.responses import CustomResponse
-from apps.payments.models import Payment
-from apps.payments.serializers import PaymentSerializer
 from apps.properties.models import Property
 from apps.properties.serializers import PropertySerializer
 import stripe

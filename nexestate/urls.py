@@ -1,4 +1,3 @@
-# Description: Main URL configuration for the project.
 from django.contrib import admin
 from django.urls import path, include
 import debug_toolbar
@@ -16,10 +15,10 @@ urlpatterns = [
     path("properties/", include("apps.properties.urls")),
     path("profiles/", include("apps.profiles.urls")),
     # path("chats/", include("apps.chats.urls")),
-    # path("payments/", include("apps.payments.urls")),
+    path("payments/", include("apps.payments.urls")),
     # path("notifications/", include("apps.notifications.urls")),
     path("profiles/", include("apps.profiles.urls")),
-    # path("reports/", include("apps.reports.urls")),
+    path("reports/", include("apps.reports.urls")),
     # path("analytics/", include("apps.analytics.urls")),
     path("enquiries/", include("apps.enquiries.urls")),
     path("ratings/", include("apps.ratings.urls")),

@@ -107,7 +107,11 @@ class Property(BaseModel):
         choices=AdvertType.choices,
         default=AdvertType.FOR_SALE,
     )
-
+    zip_code = models.CharField(
+        verbose_name=_("Zip Code"), max_length=100, default="10123"
+    )
+    parking = models.BooleanField(verbose_name=_("Parking"), default=False)
+    furnished = models.BooleanField(verbose_name=_("Furnished"), default=False)
     property_type = models.CharField(
         verbose_name=_("Property Type"),
         max_length=50,
@@ -168,7 +172,12 @@ class Property(BaseModel):
     is_approved = models.BooleanField(verbose_name=_("Is Approved"), default=False)
     is_deleted = models.BooleanField(verbose_name=_("Is Deleted"), default=False)
     is_archived = models.BooleanField(verbose_name=_("Is Archived"), default=False)
-
+    property_valuation_report = models.TextField(
+        verbose_name=_("Property Valuation Report"),
+        blank=True,
+        null=True,
+        help_text="Property valuation report",
+    )
     objects = models.Manager()
     published = PropertyPublishedManager()
 
