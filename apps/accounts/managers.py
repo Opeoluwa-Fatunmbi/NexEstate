@@ -11,7 +11,7 @@ class UserManager(BaseUserManager):
         except ValidationError:
             raise ValueError(_("You must provide a valid email address"))
 
-    async def create_user(self, first_name, last_name, email, password, **extra_fields):
+    def create_user(self, first_name, last_name, email, password, **extra_fields):
         if not (first_name and last_name):
             raise ValueError(_("Users must submit a first and last name"))
 
@@ -28,12 +28,10 @@ class UserManager(BaseUserManager):
         user.set_password(password)
         extra_fields.setdefault("is_staff", False)
         extra_fields.setdefault("is_superuser", False)
-        await user.asave(using=self._db)
+        user.save(using=self._db)
         return user
 
-    async def create_superuser(
-        self, first_name, last_name, email, password, **extra_fields
-    ):
+    def create_superuser(self, first_name, last_name, email, password, **extra_fields):
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
         extra_fields.setdefault("is_active", True)
@@ -53,13 +51,11 @@ class UserManager(BaseUserManager):
         else:
             raise ValueError(_("Admin Account: An email address is required"))
 
-        user = await self.create_user(
-            first_name, last_name, email, password, **extra_fields
-        )
+        user = self.create_user(first_name, last_name, email, password, **extra_fields)
         return user
 
-    async def get_or_none(self, **kwargs):
+    def get_or_none(self, **kwargs):
         try:
-            return await self.aget(**kwargs)
+            return self.aget(**kwargs)
         except self.model.DoesNotExist:
             return None
