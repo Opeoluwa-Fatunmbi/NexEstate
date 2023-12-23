@@ -22,6 +22,9 @@ show-logs:
 serv:
 	python manage.py runserver
 
+userv:
+	uvicorn nexestate.asgi:application --reload
+
 mmig: # run with "make mmig" or "make mmig app='app'"
 	if [ -z "$(app)" ]; then \
 		python manage.py makemigrations; \

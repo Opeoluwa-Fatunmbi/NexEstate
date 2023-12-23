@@ -11,17 +11,17 @@ from drf_spectacular.views import (
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("accounts/", include("apps.accounts.urls")),
-    path("properties/", include("apps.properties.urls")),
-    path("profiles/", include("apps.profiles.urls")),
-    # path("chats/", include("apps.chats.urls")),
-    path("payments/", include("apps.payments.urls")),
-    # path("notifications/", include("apps.notifications.urls")),
-    path("profiles/", include("apps.profiles.urls")),
-    path("reports/", include("apps.reports.urls")),
-    # path("analytics/", include("apps.analytics.urls")),
-    path("enquiries/", include("apps.enquiries.urls")),
-    path("ratings/", include("apps.ratings.urls")),
+    path("api/v1/auth/", include("apps.accounts.urls")),
+    path("api/v1/properties/", include("apps.properties.urls")),
+    path("api/v1/profiles/", include("apps.profiles.urls")),
+    # path("api/v1/chats/", include("apps.chats.urls")),
+    path("api/v1/payments/", include("apps.payments.urls")),
+    # path("api/v1/notifications/", include("apps.notifications.urls")),
+    path("api/v1/profiles/", include("apps.profiles.urls")),
+    path("api/v1/reports/", include("apps.reports.urls")),
+    # path("api/v1/analytics/", include("apps.analytics.urls")),
+    path("api/v1/enquiries/", include("apps.enquiries.urls")),
+    path("api/v1/ratings/", include("apps.ratings.urls")),
     # drf-spectacular
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(

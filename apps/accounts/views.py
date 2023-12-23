@@ -19,6 +19,7 @@ from apps.accounts.emails import Util
 from apps.accounts.auth import Authentication
 from apps.common.exceptions import RequestError
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from apps.common.utils import IsAuthenticatedCustom
 from rest_framework.throttling import UserRateThrottle
 
 
@@ -61,7 +62,7 @@ class RegisterView(APIView):
 class LoginView(APIView):
     serializer_class = LoginSerializer
     throttle_classes = [UserRateThrottle]
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedCustom,)
 
     @extend_schema(
         summary="Login a user",
@@ -97,7 +98,7 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     serializer_class = None
-    # permission_classes = (IsAuthenticatedCustom,)
+    permission_classes = (IsAuthenticatedCustom,)
 
     @extend_schema(
         summary="Logout a user",
@@ -228,6 +229,7 @@ class SetNewPasswordView(APIView):
 
 class RefreshTokensView(APIView):
     serializer_class = RefreshSerializer
+    permission_classes = (IsAuthenticatedCustom,)
 
     @extend_schema(
         summary="Refresh tokens",

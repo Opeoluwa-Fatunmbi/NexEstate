@@ -15,7 +15,7 @@ class PropertyCategories(BaseModel):
     name = models.CharField(
         verbose_name=_("Category Name"), max_length=250, unique=True
     )
-    slug = AutoSlugField(populate_from="category_name", unique=True, always_update=True)
+    slug = AutoSlugField(populate_from="name", unique=True, always_update=True)
     description = models.TextField(
         verbose_name=_("Category Description"),
         default="Default description",

@@ -40,6 +40,7 @@ THIRD_PARTY_APPS = [
     "channels",
     "debug_toolbar",
     "django_filters",
+    "corsheaders",
     "cloudinary",
     "cloudinary_storage",
     "drf_spectacular",
@@ -71,6 +72,7 @@ MIDDLEWARE = [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -115,6 +117,23 @@ DATABASES = {
 AUTH_USER_MODEL = "accounts.User"
 
 SITE_ID = 1
+
+CORS_ALLOW_HEADERS = (
+    "x-requested-with",
+    "content-type",
+    "accept",
+    "origin",
+    "authorization",
+    "guestuserid",
+    "accept-encoding",
+    "access-control-allow-origin",
+    "content-disposition",
+)
+
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS").split(" ")
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_METHODS = ("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -364,16 +383,16 @@ JAZZMIN_SETTINGS = {
 
 
 # Cache settings
-
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6379",
-    }
-}
-
-
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+#
+# CACHES = {
+#    "default": {
+#        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#        "LOCATION": "redis://127.0.0.1:6379",
+#    }
+# }
+#
+#
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 
 # Debug Toolbar settings
