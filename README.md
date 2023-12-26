@@ -16,7 +16,7 @@ NexEstate is a Django-based real estate listing web application that allows user
 1. Clone the repository:
 
     ```shell
-    git clone https://github.com/your-username/NexEstate.git
+    git clone https://github.com/Opeoluwa-Fatunmbi/NexEstate.git
     ```
 
 2. Navigate to the project directory:
