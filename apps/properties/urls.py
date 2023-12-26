@@ -12,6 +12,7 @@ from apps.properties.views import (
     AddToFavouritesView,
     DeletePropertyFromFavouritesView,
     ListFavoritePropertiesAPIView,
+    SmartSearchView,
 )
 
 app_name = "properties"
@@ -42,4 +43,5 @@ urlpatterns = [
         ListFavoritePropertiesAPIView.as_view(),
         name="list-favorites",
     ),
+    path("smart-search/", SmartSearchView.as_view(), name="smart-search"),
 ]

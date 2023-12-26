@@ -172,6 +172,7 @@ class Property(BaseModel):
     is_approved = models.BooleanField(verbose_name=_("Is Approved"), default=False)
     is_deleted = models.BooleanField(verbose_name=_("Is Deleted"), default=False)
     is_archived = models.BooleanField(verbose_name=_("Is Archived"), default=False)
+    is_favorite = models.BooleanField(verbose_name=_("Is Favorite"), default=False)
     property_valuation_report = models.TextField(
         verbose_name=_("Property Valuation Report"),
         blank=True,
@@ -211,14 +212,6 @@ class Property(BaseModel):
         except:
             url = ""
         return url
-
-    # @property
-    # def avg_rating(self):
-    #     reviews = [review.rating for review in self.reviews.all()]
-    #     avg = 0
-    #     if len(reviews) > 0:
-    #         avg = round(mean(list(reviews)))  # Mean
-    #     return avg
 
 
 class PropertyViews(BaseModel):

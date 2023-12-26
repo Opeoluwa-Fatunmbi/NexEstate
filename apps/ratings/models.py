@@ -38,10 +38,10 @@ class Rating(BaseModel):
         default=0,
     )
     comment = models.TextField(verbose_name=_("Comment"))
-    property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
-    # class Meta:
-    #     unique_together = ["user", "agent"]
+    class Meta:
+        verbose_name = _("Rating")
+        verbose_name_plural = _("Ratings")
 
     def __str__(self):
         return f"{self.agent} rated at {self.rating}"

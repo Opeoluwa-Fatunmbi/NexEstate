@@ -411,3 +411,36 @@ class ListFavoritePropertiesAPIView(generics.ListAPIView):
         user = self.request.user
         queryset = Property.objects.filter(user=user).order_by("-created_at")
         return queryset
+
+
+class SmartSearchView(APIView):
+    # Import the Favorite model
+
+    def get(self, request, *args, **kwargs):
+        try:
+            # Extract query parameters
+            query = request.GET.get("query", "")
+            location = request.GET.get("location", "")
+
+            # Perform search using 'gemini' model
+            properties = self.perform_search(query, location)
+
+            # Check if properties are in user's favorites
+            for property in properties:
+                property.is_favorite = FavouriteProperty.objects.filter(
+                    user=request.user, property=property
+                ).exists()
+
+            # Serialize properties
+            serializer = PropertySerializer(properties, many=True)
+
+            # Return response
+            return CustomResponse.success(serializer.data)
+        except Exception as e:
+            logger.error(e)
+            return CustomResponse.error(message="Server Error")
+
+    def perform_search(self, query, location):
+        # Implement your search logic here
+        # For now, we'll just return all properties
+        return Property.objects.all()
