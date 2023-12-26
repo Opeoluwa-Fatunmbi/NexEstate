@@ -330,7 +330,9 @@ class PropertyTaxAPIView(APIView):
         try:
             property = Property.objects.get(slug=slug)
 
-            tax = property.price * property.tax
+
+            # tax = property.price * property.tax
+            tax = Property.final_property_price(property)
             return CustomResponse.success(tax)
         except:
             return CustomResponse.error(
