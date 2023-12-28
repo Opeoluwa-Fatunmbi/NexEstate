@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
 from phonenumber_field.modelfields import PhoneNumberField
 
-from apps.ratings.models import Rating
+# from apps.ratings.models import Rating
 
 from apps.common.models import BaseModel
 
@@ -72,7 +72,7 @@ class Profile(BaseModel):
     )
     is_top_agent = models.BooleanField(verbose_name=_("Top Agent"), default=False)
     # rating = models.DecimalField(max_digits=4, decimal_places=2, null=True, blank=True)
-    rating = models.ForeignKey(Rating, on_delete=models.CASCADE, null=True, blank=True)
+    # rating = models.ForeignKey(Rating, on_delete=models.CASCADE, null=True, blank=True)
     num_reviews = models.IntegerField(
         verbose_name=_("Number of Reviews"), default=0, null=True, blank=True
     )
