@@ -97,7 +97,7 @@ tomli==2.0.1
 tqdm==4.66.1
 treblle==0.14
 Twisted==23.10.0
-twisted-iocpsupport==1.0.4
+# twisted-iocpsupport==1.0.4
 txaio==23.1.1
 typing_extensions==4.7.1
 tzdata==2023.3
