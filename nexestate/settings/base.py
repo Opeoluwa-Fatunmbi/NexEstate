@@ -16,7 +16,7 @@ SECRET_KEY = config("SECRET_KEY")
 
 
 # ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(" ")
-ALLOWED_HOSTS = [".vercel.app"]
+ALLOWED_HOSTS = [".vercel.app", ".now.sh", "localhost", "127.0.0.1"]
 
 # Application definition
 
@@ -374,38 +374,38 @@ JAZZMIN_SETTINGS = {
 
 # Cache settings
 
-CACHES = {
-    "default": {
-        "BACKEND": "django.core.cache.backends.redis.RedisCache",
-        "LOCATION": "redis://localhost:6379",
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
+#         "LOCATION": "redis://localhost:6379",
+#     }
+# }
 
 
-SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 
 
 # Debug Toolbar settings
 
-DEBUG_TOOLBAR_PANELS = [
-    "debug_toolbar.panels.cache.CachePanel",
-    # other panels
-]
+# DEBUG_TOOLBAR_PANELS = [
+#     "debug_toolbar.panels.cache.CachePanel",
+#     # other panels
+# ]
 
 
 # Channels settings
 
 ASGI_APPLICATION = "nexestate.asgi.application"
 
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            # Use Redis as the channel layer backend
-            "hosts": [("127.0.0.1", 6379)],
-        },
-    },
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             # Use Redis as the channel layer backend
+#             "hosts": [("127.0.0.1", 6379)],
+#         },
+#     },
+# }
 
 
 # JWT Settings
