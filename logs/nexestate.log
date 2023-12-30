@@ -3920,3 +3920,4 @@ Traceback (most recent call last):
     raise ConnectionError(self._error_message(e))
 redis.exceptions.ConnectionError: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
 2023-12-28 15:42:24,480 django.request WARNING  Not Found: /favicon.ico
+2023-12-30 17:14:42,591 django.utils.autoreload INFO     Watching for file changes with StatReloader

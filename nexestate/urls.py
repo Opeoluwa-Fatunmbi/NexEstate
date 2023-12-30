@@ -51,7 +51,7 @@ urlpatterns = [
     path("api/v1/enquiries/", include("apps.enquiries.urls")),
     path("api/v1/ratings/", include("apps.ratings.urls")),
     # Health check
-    path("api/v4/healthcheck/", HealthCheckView.as_view()),
+    path("api/v1/healthcheck/", HealthCheckView.as_view()),
     # DOCUMENTATION
     # drf-spectacular
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
