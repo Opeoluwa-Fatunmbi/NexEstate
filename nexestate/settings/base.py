@@ -10,7 +10,7 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-# SETTINGS = config("SETTINGS", default=f"nexestate.settings.{config('SETTINGS')}")
+SETTINGS = config("SETTINGS", default=f"nexestate.settings.{config('SETTINGS')}")
 
 
 # SECURITY WARNING: keep the secret key used in production secret!
