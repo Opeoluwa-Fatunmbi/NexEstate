@@ -3921,3 +3921,30 @@ Traceback (most recent call last):
 redis.exceptions.ConnectionError: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
 2023-12-28 15:42:24,480 django.request WARNING  Not Found: /favicon.ico
 2023-12-30 17:14:42,591 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2023-12-30 21:33:00,690 django.request WARNING  Not Found: /static/jazzmin/css/main.css
+2023-12-30 21:33:00,700 django.request WARNING  Not Found: /static/vendor/adminlte/css/adminlte.min.css
+2023-12-30 21:33:00,778 django.request WARNING  Not Found: /static/vendor/fontawesome-free/css/all.min.css
+2023-12-30 21:33:01,353 django.request WARNING  Not Found: /static/admin/js/vendor/jquery/jquery.js
+2023-12-30 21:33:01,355 django.request WARNING  Not Found: /static/vendor/adminlte/js/adminlte.min.js
+2023-12-30 21:33:01,529 django.request WARNING  Not Found: /static/vendor/bootstrap/js/bootstrap.min.js
+2023-12-30 21:33:01,534 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:33:02,169 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:33:02,832 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:33:03,120 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:42:43,480 django.request WARNING  Not Found: /static/vendor/fontawesome-free/css/all.min.css
+2023-12-30 21:42:43,487 django.request WARNING  Not Found: /static/jazzmin/css/main.css
+2023-12-30 21:42:43,489 django.request WARNING  Not Found: /static/vendor/adminlte/css/adminlte.min.css
+2023-12-30 21:42:44,245 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:42:44,296 django.request WARNING  Not Found: /static/admin/js/vendor/jquery/jquery.js
+2023-12-30 21:42:45,092 django.request WARNING  Not Found: /static/vendor/bootstrap/js/bootstrap.min.js
+2023-12-30 21:42:45,099 django.request WARNING  Not Found: /static/vendor/adminlte/js/adminlte.min.js
+2023-12-30 21:42:45,438 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:42:47,390 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:43:33,067 django.request WARNING  Not Found: /static/vendor/fontawesome-free/css/all.min.css
+2023-12-30 21:43:33,074 django.request WARNING  Not Found: /static/vendor/adminlte/css/adminlte.min.css
+2023-12-30 21:43:33,092 django.request WARNING  Not Found: /static/jazzmin/css/main.css
+2023-12-30 21:43:33,094 django.request WARNING  Not Found: /static/admin/js/vendor/jquery/jquery.js
+2023-12-30 21:43:33,374 django.request WARNING  Not Found: /static/media/logo.png
+2023-12-30 21:43:33,435 django.request WARNING  Not Found: /static/vendor/adminlte/js/adminlte.min.js
+2023-12-30 21:43:33,446 django.request WARNING  Not Found: /static/vendor/bootstrap/js/bootstrap.min.js
+2023-12-30 21:43:33,560 django.request WARNING  Not Found: /static/media/logo.png
