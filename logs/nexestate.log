@@ -3948,3 +3948,4 @@ redis.exceptions.ConnectionError: Error 10061 connecting to localhost:6379. No c
 2023-12-30 21:43:33,435 django.request WARNING  Not Found: /static/vendor/adminlte/js/adminlte.min.js
 2023-12-30 21:43:33,446 django.request WARNING  Not Found: /static/vendor/bootstrap/js/bootstrap.min.js
 2023-12-30 21:43:33,560 django.request WARNING  Not Found: /static/media/logo.png
+2024-01-04 23:06:22,702 django.request WARNING  Forbidden: /api/v1/auth/register/
