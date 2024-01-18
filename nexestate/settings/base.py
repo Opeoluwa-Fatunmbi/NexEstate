@@ -170,7 +170,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "static/media/")
 STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 
 
-
 # Cloudinary settings
 
 CLOUDINARY_STORAGE = {
