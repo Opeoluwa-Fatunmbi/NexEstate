@@ -4,7 +4,6 @@ from decouple import config
 import logging
 import logging.config
 from django.utils.log import DEFAULT_LOGGING
-import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -41,6 +40,7 @@ DJANGO_APPS = [
 THIRD_PARTY_APPS = [
     "adrf",
     "rest_framework",
+    "rest_framework.authtoken",
     "channels",
     "debug_toolbar",
     "django_filters",
@@ -51,7 +51,6 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "phonenumber_field",
     "django_countries",
-    "social_django",
     "whitenoise",
     "treblle",
 ]
@@ -65,7 +64,6 @@ LOCAL_APPS = [
     "apps.enquiries",
     "apps.payments",
     "apps.profiles",
-    "apps.notifications",
     "apps.reports",
     "apps.ratings",
 ]
@@ -131,26 +129,10 @@ CORS_ALLOW_METHODS = ("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
 
 # Authentication backends
 
-AUTHENTICATION_BACKENDS = (
-    "social_core.backends.open_id.OpenIdAuth",
-    "social_core.backends.google.GoogleOpenId",
-    "social_core.backends.google.GoogleOAuth2",
-    "social_core.backends.google.GoogleOAuth",
-    "social_core.backends.twitter.TwitterOAuth",
-    "social_core.backends.yahoo.YahooOpenId",
-    "social_core.backend.auth0.Auth0OAuth2",
+AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
-)
+]
 
-# AUTH0 SETTINGS
-
-SOCIAL_AUTH_URL_NAMESPACE = "social"
-SOCIAL_AUTH_JSONFIELD_ENABLED = True
-SOCIAL_AUTH_TRAILING_SLASH = False
-SOCIAL_AUTH_AUTH0_DOMAIN = config("APP_DOMAIN")
-SOCIAL_AUTH_AUTH0_KEY = config("APP_CLIENT_ID")
-SOCIAL_AUTH_AUTH0_SECRET = config("APP_CLIENT_SECRET")
-SOCIAL_AUTH_AUTH0_SCOPE = ["openid", "profile", "email"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -480,7 +462,12 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 
 
-LOGIN_URL = "login/auth0"
-LOGOUT_URL = "logout"
-LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/"
+# SOCIAL AUTH SETTINGS
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        "APP": {"client_id": "123", "secret": "456", "key": ""}
+    }
+}

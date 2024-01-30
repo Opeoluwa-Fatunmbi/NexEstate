@@ -7,6 +7,7 @@ from django.conf import settings
 from django.utils import timezone
 from apps.common.models import BaseModel
 
+
 # Create your models here.
 
 
@@ -37,6 +38,10 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.full_name
+
+    def tokens(self):
+        refresh = RefreshToken.for_user(self)
+        return {"refresh": str(refresh), "access": str(refresh.access_token)}
 
 
 class Jwt(BaseModel):

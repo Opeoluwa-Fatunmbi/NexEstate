@@ -8,11 +8,17 @@ from apps.accounts.views import (
     SendPasswordResetOtpView,
     SetNewPasswordView,
     RefreshTokensView,
+    GoogleSocialAuthView,
+    FacebookSocialAuthView,
+    TwitterSocialAuthView,
 )
 
-app_name = "apps.auth_module"
+app_name = "apps.accounts"
 
 urlpatterns = [
+    path('google/', GoogleSocialAuthView.as_view(), name="google"),
+    path('facebook/', FacebookSocialAuthView.as_view(), name="facebook"),
+    path('twitter/', TwitterSocialAuthView.as_view(), name="twitter"),
     path("register/", RegisterView.as_view(), name="register"),
     path("verify-email/", VerifyEmailView.as_view(), name="verify-email"),
     path(

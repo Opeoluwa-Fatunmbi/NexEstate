@@ -3949,3 +3949,72 @@ redis.exceptions.ConnectionError: Error 10061 connecting to localhost:6379. No c
 2023-12-30 21:43:33,446 django.request WARNING  Not Found: /static/vendor/bootstrap/js/bootstrap.min.js
 2023-12-30 21:43:33,560 django.request WARNING  Not Found: /static/media/logo.png
 2024-01-04 23:06:22,702 django.request WARNING  Forbidden: /api/v1/auth/register/
+2024-01-30 14:15:47,854 django.request WARNING  Not Found: /enquiries/create/
+2024-01-30 14:15:48,208 django.request WARNING  Not Found: /favicon.ico
+2024-01-30 14:15:54,653 django.request WARNING  Not Found: /e
+2024-01-30 14:16:03,085 django.request WARNING  Not Found: /e
+2024-01-30 14:16:11,607 django.request ERROR    Internal Server Error: /admin/login/
+Traceback (most recent call last):
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\utils\module_loading.py", line 30, in import_string
+    return cached_import(module_path, class_name)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\utils\module_loading.py", line 16, in cached_import
+    return getattr(module, class_name)
+AttributeError: module 'social_core.backends.google' has no attribute 'GoogleOpenId'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\asgiref\sync.py", line 534, in thread_handler
+    raise exc_info[1]
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\core\handlers\exception.py", line 42, in inner
+    response = await get_response(request)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\core\handlers\base.py", line 253, in _get_response_async
+    response = await wrapped_callback(
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\asgiref\sync.py", line 479, in __call__
+    ret: _R = await loop.run_in_executor(
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\asgiref\current_thread_executor.py", line 40, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\asgiref\sync.py", line 538, in thread_handler
+    return func(*args, **kwargs)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\utils\decorators.py", line 46, in _wrapper
+    return bound_method(*args, **kwargs)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\views\decorators\cache.py", line 62, in _wrapper_view_func
+    response = view_func(request, *args, **kwargs)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\admin\sites.py", line 422, in login
+    **self.each_context(request),
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\admin\sites.py", line 337, in each_context
+    "available_apps": self.get_app_list(request),
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\admin\sites.py", line 536, in get_app_list
+    app_dict = self._build_app_dict(request, app_label)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\admin\sites.py", line 478, in _build_app_dict
+    has_module_perms = model_admin.has_module_permission(request)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\admin\options.py", line 611, in has_module_permission
+    return request.user.has_module_perms(self.opts.app_label)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\auth\models.py", line 488, in has_module_perms
+    return _user_has_module_perms(self, module)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\auth\models.py", line 231, in _user_has_module_perms
+    for backend in auth.get_backends():
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\auth\__init__.py", line 38, in get_backends
+    return _get_backends(return_tuples=False)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\auth\__init__.py", line 27, in _get_backends
+    backend = load_backend(backend_path)
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\contrib\auth\__init__.py", line 21, in load_backend
+    return import_string(path)()
+  File "C:\Users\opeol\Desktop\DJANGO\NexEstate\env\lib\site-packages\django\utils\module_loading.py", line 32, in import_string
+    raise ImportError(
+ImportError: Module "social_core.backends.google" does not define a "GoogleOpenId" attribute/class
+2024-01-30 14:16:20,670 django.request WARNING  Not Found: /auth/register/
+2024-01-30 14:16:43,455 django.request WARNING  Method Not Allowed: /api/v1/auth/register/
+2024-01-30 14:16:51,177 django.request WARNING  Not Found: /api/v1/auth/
+2024-01-30 14:17:09,436 django.request WARNING  Not Found: /api/v1/auth/auth/
+2024-01-30 14:17:24,746 django.request WARNING  Not Found: /api/v1/auth/
+2024-01-30 14:21:28,815 django.request WARNING  Not Found: //auth/login/google-oauth2/
+2024-01-30 14:57:14,844 django.request WARNING  Not Found: //auth/login/google-oauth2/
+2024-01-30 14:57:15,129 django.request WARNING  Not Found: //auth/login/google-oauth2/
+2024-01-30 14:57:17,729 django.request WARNING  Not Found: //auth/login/google-oauth2/
+2024-01-30 14:59:48,465 django.request WARNING  Not Found: /auth/login/google-oauth2/
+2024-01-30 14:59:52,011 django.request WARNING  Not Found: /auth/login/google-oauth2/
+2024-01-30 15:06:04,694 django.request WARNING  Not Found: /auth/login/google-oauth2/
+2024-01-30 17:49:17,745 django.request WARNING  Not Found: /api/v1/auth/
+2024-01-30 17:49:18,704 django.request WARNING  Not Found: /api/v1/auth/
+2024-01-30 17:49:27,818 django.request WARNING  Method Not Allowed: /api/v1/auth/register/

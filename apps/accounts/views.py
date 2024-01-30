@@ -21,6 +21,12 @@ from apps.common.exceptions import RequestError
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from apps.common.utils import IsAuthenticatedCustom
 from rest_framework.throttling import UserRateThrottle
+from rest_framework.generics import GenericAPIView
+from .serializers import (
+    GoogleSocialAuthSerializer,
+    TwitterAuthSerializer,
+    FacebookSocialAuthSerializer,
+)
 
 
 class RegisterView(APIView):
@@ -262,3 +268,48 @@ class RefreshTokensView(APIView):
             data={"access": access, "refresh": refresh},
             status_code=201,
         )
+
+
+class GoogleSocialAuthView(GenericAPIView):
+    serializer_class = GoogleSocialAuthSerializer
+
+    def post(self, request):
+        """
+
+        POST with "auth_token"
+
+        Send an idtoken as from google to get user information
+
+        """
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = (serializer.validated_data)["auth_token"]
+        return CustomResponse(data, status=200)
+
+
+class FacebookSocialAuthView(GenericAPIView):
+    serializer_class = FacebookSocialAuthSerializer
+
+    def post(self, request):
+        """
+
+        POST with "auth_token"
+
+        Send an access token as from facebook to get user information
+
+        """
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = (serializer.validated_data)["auth_token"]
+        return CustomResponse(data, status=200)
+
+
+class TwitterSocialAuthView(GenericAPIView):
+    serializer_class = TwitterAuthSerializer
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        return CustomResponse(serializer.validated_data, status=200)
