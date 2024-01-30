@@ -51,6 +51,7 @@ THIRD_PARTY_APPS = [
     "drf_spectacular",
     "phonenumber_field",
     "django_countries",
+    "social_django",
     "whitenoise",
     "treblle",
 ]
@@ -126,6 +127,30 @@ CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS").split(" ")
 CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOW_METHODS = ("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+
+
+# Authentication backends
+
+AUTHENTICATION_BACKENDS = (
+    "social_core.backends.open_id.OpenIdAuth",
+    "social_core.backends.google.GoogleOpenId",
+    "social_core.backends.google.GoogleOAuth2",
+    "social_core.backends.google.GoogleOAuth",
+    "social_core.backends.twitter.TwitterOAuth",
+    "social_core.backends.yahoo.YahooOpenId",
+    "social_core.backend.auth0.Auth0OAuth2",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
+# AUTH0 SETTINGS
+
+SOCIAL_AUTH_URL_NAMESPACE = "social"
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_TRAILING_SLASH = False
+SOCIAL_AUTH_AUTH0_DOMAIN = config("APP_DOMAIN")
+SOCIAL_AUTH_AUTH0_KEY = config("APP_CLIENT_ID")
+SOCIAL_AUTH_AUTH0_SECRET = config("APP_CLIENT_SECRET")
+SOCIAL_AUTH_AUTH0_SCOPE = ["openid", "profile", "email"]
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -453,3 +478,9 @@ CELERY_TASK_EAGER_PROPAGATES = False
 CELERY_TASK_REJECT_ON_WORKER_LOST = True
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
+
+
+LOGIN_URL = "login/auth0"
+LOGOUT_URL = "logout"
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"

@@ -67,6 +67,8 @@ urlpatterns = [
     ),
     # django-debug-toolbar
     path("__debug__/", include(debug_toolbar.urls)),
+    #
+    path("auth/", include("social_django.urls", namespace="social")),
 ]
 
 
