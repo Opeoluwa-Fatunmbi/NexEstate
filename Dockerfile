@@ -1,38 +1,11 @@
-FROM python:3.11-slim-buster
+FROM python:3.8-slim-buster
 
-RUN apt-get update
-
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
-ENV APP_HOME=/build
-RUN mkdir $APP_HOME
-RUN mkdir $APP_HOME/staticfiles
-
-LABEL maintainer='opeoluwafatunmbi@gmail.com'
-LABEL description="Development image for NexEstate API"
-
-ENV PYTHONDONTWRITEBYTECODE 1
-
-ENV PYTHONUNBUFFERED 1
-
-# We create folder named build for our app.
 WORKDIR $APP_HOME
 
-COPY ./initials ./initials
-COPY ./.env .
-COPY ./requirements.txt .
-
-# We copy our app folder to the /build
+COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY ./initials/entrypoint /entrypoint
-RUN sed -i 's/\r$//g' /entrypoint
-RUN chmod +x /entrypoint
+COPY . .
 
-COPY ./initials/start /start
-RUN sed -i 's/\r$//g' /start
-RUN chmod +x /start
-
-ENTRYPOINT [ "/entrypoint" ]
+CMD [ "python3", "manage.py", "runserver", "0.0.0.0:8000" ]

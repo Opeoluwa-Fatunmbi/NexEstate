@@ -15,7 +15,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = config("SECRET_KEY")
 
-# SECURITY WARNING: don't run with debug turned on in production!
 
 
 # ALLOWED_HOSTS = config("ALLOWED_HOSTS").split(" ")
@@ -44,7 +43,6 @@ THIRD_PARTY_APPS = [
     "channels",
     "debug_toolbar",
     "django_filters",
-    "django_celery_results",
     "corsheaders",
     "cloudinary",
     "cloudinary_storage",
@@ -444,22 +442,6 @@ TREBLLE_INFO = {
     "api_key": config("TREBLLE_API_KEY"),
     "project_id": config("TREBLLE_PROJECT_ID"),
 }
-
-
-# CELERY SETTINGS
-
-CELERY_BROKER_URL = config("CELERY_BROKER_URL")
-CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND")
-CELERY_ACCEPT_CONTENT = ["application/json"]
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
-CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_TASK_SOFT_TIME_LIMIT = 30 * 60
-CELERY_TASK_ALWAYS_EAGER = False
-CELERY_TASK_EAGER_PROPAGATES = False
-CELERY_TASK_REJECT_ON_WORKER_LOST = True
-CELERY_TASK_SERIALIZER = "json"
-CELERY_RESULT_SERIALIZER = "json"
 
 
 # SOCIAL AUTH SETTINGS
