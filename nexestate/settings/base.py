@@ -453,3 +453,20 @@ SOCIALACCOUNT_PROVIDERS = {
         "APP": {"client_id": "123", "secret": "456", "key": ""}
     }
 }
+
+
+# Cross-Origin Resource Sharing (CORS)
+# SECURE_BROWSER_XSS_FILTER = True
+# SECURE_CONTENT_TYPE_NOSNIFF = True
+
+# Security Headers
+# SECURE_SSL_REDIRECT = True
+
+# HTTP Strict Transport Security (HSTS)
+# SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS")
+# SECURE_HSTS_PRELOAD = True
+# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+# Cookies
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True

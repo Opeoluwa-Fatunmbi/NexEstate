@@ -4018,3 +4018,5 @@ ImportError: Module "social_core.backends.google" does not define a "GoogleOpenI
 2024-01-30 17:49:17,745 django.request WARNING  Not Found: /api/v1/auth/
 2024-01-30 17:49:18,704 django.request WARNING  Not Found: /api/v1/auth/
 2024-01-30 17:49:27,818 django.request WARNING  Method Not Allowed: /api/v1/auth/register/
+2024-02-11 19:41:28,458 django.utils.autoreload INFO     Watching for file changes with StatReloader
+2024-02-11 19:42:26,051 django.utils.autoreload INFO     Watching for file changes with StatReloader
