@@ -1,53 +1,59 @@
 version: "3.9"
 
 services:
-  api:
-    build:
-      context: ./
-      dockerfile: Dockerfile
-    command: /start
-    volumes:
-      - .:/build
-      - static_volume:/build/staticfiles
-      - media_volume:/build/mediafiles
-    ports:
-      - "8000:8000"
-    environment:
-      - POSTGRES_SERVER=db
-    env_file:
-      - .env
-    depends_on:
-      - db
+    api:
+        build:
+            context: .
+            dockerfile: ./docker/local/django/Dockerfile
+        command: /start
+        volumes:
+            - .:/app
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+        expose:
+            - "8000"
+        env_file:
+            - .env
+        depends_on:
+            - postgres-db
+            - redis
+        networks:
+            - estate
 
-  db:
-    restart: always
-    image: postgres:13-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    env_file:
-      - .env
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
+    postgres-db:
+        image: postgres:12.0-alpine
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_USER=${POSTGRES_USER}
+            - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+            - POSTGRES_DB=${POSTGRES_DB}
+        networks:
+            - estate-react
 
-  pgadmin:
-    container_name: pgadmin
-    image: dpage/pgadmin4
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=pgadmin4@pgadmin.org
-      - PGADMIN_DEFAULT_PASSWORD=admin
-    ports:
-      - "5050:80"
-    depends_on:
-      - db
+
+    nginx:
+        restart: always
+        depends_on:
+            - api
+        volumes:
+            - static_volume:/app/staticfiles
+            - media_volume:/app/mediafiles
+        build:
+            context: ./docker/local/nginx
+            dockerfile: Dockerfile
+        ports:
+            - "8080:80"
+        networks:
+            - estate
+
+networks:
+    estate-react:
+        driver: bridge
 
 volumes:
-  postgres_data:
-  static_volume:
-  media_volume:
+    postgres_data:
+    static_volume:
+    media_volume:
