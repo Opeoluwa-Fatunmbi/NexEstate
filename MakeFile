@@ -4,6 +4,8 @@ export
 ENV_FILE_PARAM = --env-file .env
 
 endif
+act:
+	source env/Scripts/activate
 
 build:
 	docker compose up --build -d --remove-orphans
