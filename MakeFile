@@ -1,6 +1,6 @@
 ifneq (,$(wildcard ./.env))
 include .env
-export
+export 
 ENV_FILE_PARAM = --env-file .env
 
 endif
@@ -8,61 +8,60 @@ act:
 	source env/Scripts/activate
 
 build:
-	docker compose up --build -d --remove-orphans
+	docker-compose up --build -d --remove-orphans
+
+cstatic:
+	python manage.py collectstatic --noinput
 
 up:
-	docker compose up -d
+	docker-compose up -d
 
 down:
-	docker compose down
+	docker-compose down
 
 show-logs:
-	docker compose logs
+	docker-compose logs
 
-migrate:
-	docker compose exec api python3 manage.py migrate
+serv:
+	python manage.py runserver
 
-makemigrations:
-	docker compose exec api python3 manage.py makemigrations
+userv:
+	uvicorn nexestate.asgi:application --reload
 
-superuser:
-	docker compose exec api python3 manage.py createsuperuser
+mmig: # run with "make mmig" or "make mmig app='app'"
+	if [ -z "$(app)" ]; then \
+		python manage.py makemigrations; \
+	else \
+		python manage.py makemigrations "$(app)"; \
+	fi
 
-collectstatic:
-	docker compose exec api python3 manage.py collectstatic --no-input --clear
+mig: # run with "make mig" or "make mig app='app'"
+	if [ -z "$(app)" ]; then \
+		python manage.py migrate; \
+	else \
+		python manage.py migrate "$(app)"; \
+	fi
 
-down-v:
-	docker compose down -v
-
-volume:
-	docker volume inspect estate-src_postgres_data
-
-estate-db:
-	docker compose exec postgres-db psql --username=admin --dbname=estate
-
+init:
+	python manage.py initial_data
+	
 test:
-	docker compose exec api pytest -p no:warnings --cov=.
+	pytest --disable-warnings -vv -x
 
-test-html:
-	docker compose exec api pytest -p no:warnings --cov=. --cov-report html
+shell:
+	python manage.py shell
 
-flake8:
-	docker compose exec api flake8 .
+suser:
+	python manage.py createsuperuser
 
-black-check:
-	docker compose exec api black --check --exclude=migrations .
+cpass:
+	python manage.py changepassword
+	
+reqm: # Install requirements
+	pip install -r requirements.txt
 
-black-diff:
-	docker compose exec api black --diff --exclude=migrations .
+ureqm: # Update requirements
+	pip freeze > requirements.txt
 
-black:
-	docker compose exec api black --exclude=migrations .
-
-isort-check:
-	docker compose exec api isort . --check-only --skip env --skip migrations
-
-isort-diff:
-	docker compose exec api isort . --diff --skip env --skip migrations
-
-isort:
-	docker compose exec api isort . --skip env --skip migrations
+secretk:
+	python -c "from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())"
