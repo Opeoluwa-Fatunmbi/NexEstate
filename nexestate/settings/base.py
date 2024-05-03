@@ -49,7 +49,6 @@ THIRD_PARTY_APPS = [
     "phonenumber_field",
     "django_countries",
     "whitenoise",
-    "treblle",
 ]
 
 # Local apps
@@ -78,7 +77,6 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "treblle.middleware.TreblleMiddleware",
 ]
 
 ROOT_URLCONF = "nexestate.urls"
@@ -218,51 +216,6 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 EMAIL_OTP_EXPIRE_SECONDS = config("EMAIL_OTP_EXPIRE_SECONDS")
 
 
-# Logging Settings
-# logger = logging.getLogger(__name__)
-#
-# LOG_LEVEL = "INFO"
-#
-# logging.config.dictConfig(
-#    {
-#        "version": 1,
-#        "disable_existing_loggers": False,
-#        "formatters": {
-#            "console": {
-#                "format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
-#            },
-#            "file": {"format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
-#            "django.server": DEFAULT_LOGGING["formatters"]["django.server"],
-#        },
-#        "handlers": {
-#            "console": {
-#                "class": "logging.StreamHandler",
-#                "formatter": "console",
-#            },
-#            "file": {
-#                "level": "INFO",
-#                "class": "logging.FileHandler",
-#                "formatter": "file",
-#                "filename": "logs/nexestate.log",
-#            },
-#            "django.server": DEFAULT_LOGGING["handlers"]["django.server"],
-#        },
-#        "loggers": {
-#            "": {
-#                "level": "INFO",
-#                "handlers": ["console", "file"],
-#                "propagate": False,
-#            },
-#            "apps": {
-#                "level": "INFO",
-#                "handlers": ["console"],
-#                "propagate": False,
-#            },
-#            "django.server": DEFAULT_LOGGING["loggers"]["django.server"],
-#        },
-#    }
-# )
-#
 
 SPECTACULAR_SETTINGS = {
     "TITLE": "NexEstate API",
@@ -380,40 +333,11 @@ JAZZMIN_SETTINGS = {
 }
 
 
-# Cache settings
-
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django.core.cache.backends.redis.RedisCache",
-#         "LOCATION": "redis://localhost:6379",
-#     }
-# }
-
-
-# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-
-
-# Debug Toolbar settings
-
-# DEBUG_TOOLBAR_PANELS = [
-#     "debug_toolbar.panels.cache.CachePanel",
-#     # other panels
-# ]
-
 
 # Channels settings
 
 ASGI_APPLICATION = "nexestate.asgi.application"
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             # Use Redis as the channel layer backend
-#             "hosts": [("127.0.0.1", 6379)],
-#         },
-#     },
-# }
 
 
 # JWT Settings
@@ -435,12 +359,6 @@ STRIPE_SECRET_KEY = config("STRIPE_SECRET_KEY")
 GOOGLE_API_KEY = config("GOOGLE_API_KEY")
 
 
-# TREBLLE SETTINGS
-
-TREBLLE_INFO = {
-    "api_key": config("TREBLLE_API_KEY"),
-    "project_id": config("TREBLLE_PROJECT_ID"),
-}
 
 
 # SOCIAL AUTH SETTINGS
@@ -452,20 +370,3 @@ SOCIALACCOUNT_PROVIDERS = {
         "APP": {"client_id": "123", "secret": "456", "key": ""}
     }
 }
-
-
-# Cross-Origin Resource Sharing (CORS)
-# SECURE_BROWSER_XSS_FILTER = True
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-
-# Security Headers
-# SECURE_SSL_REDIRECT = True
-
-# HTTP Strict Transport Security (HSTS)
-# SECURE_HSTS_SECONDS = config("SECURE_HSTS_SECONDS")
-# SECURE_HSTS_PRELOAD = True
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-
-# Cookies
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
